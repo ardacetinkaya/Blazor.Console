@@ -3,5 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
-
+  <ItemGroup>
+    <ProjectReference Include="..\src\Blazor.Console\Blazor.Console.csproj" />
+  </ItemGroup>
 </Project>

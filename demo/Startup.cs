@@ -1,4 +1,4 @@
-namespace Blazor.Console
+namespace BlazorConsoleDemo
 {
     using System;
     using System.Collections.Generic;
