@@ -1,12 +1,20 @@
 namespace Blazor.Console
 {
     using Microsoft.AspNetCore.Components;
+    using Microsoft.AspNetCore.Components.Forms;
     using System;
     using System.Threading.Tasks;
     public class BlazorConsoleComponent : ComponentBase
     {
+        protected string terminal = string.Empty;
+        protected string input = string.Empty;
 
-        async Task Execute(EditContext context)
+        protected TerminalCommand command = new TerminalCommand();
+        protected class TerminalCommand
+        {
+            public string Text { get; set; }
+        }
+        protected async Task Execute(EditContext context)
         {
             var cmd = context.Model as TerminalCommand;
             terminal += $"<p><span style='color:white;font-weight:bold'>{DateTime.Now.ToShortTimeString()} > </span><span style='color:yellow'>{cmd.Text}{Environment.NewLine}</span>";
