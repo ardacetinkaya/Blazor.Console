@@ -1,22 +1,22 @@
 @using Microsoft.AspNetCore.Components.Forms
+
 @inherits Blazor.Console.BlazorConsoleComponent
-<h1>Hello, world!</h1>
-Welcome
+
+<h5>Blazor.Console [Version 1.0.0]</h5>
+<h6>@System.DateTime.Now.ToShortDateString()</h6>
 <div id="container">
     <pre>
-    <code>
-            @((MarkupString)terminal)
-        </code>
+        <code>@((MarkupString)terminal)</code>
     </pre>
 
-    <EditForm OnValidSubmit="Execute" Model="command">
+    <EditForm OnValidSubmit="Execute" autocomplete="off" Model="command">
         <div id="input-line" class="input-line">
-            <div class="prompt"></div><div>
+            <div class="prompt">></div><div>
                 <p>
-                    <label for="commandline">></label>
-                    <InputText id="commandline" Class="cmdline" autofocus="true" @bind-Value="@command.Text" />
+                    <InputText id="commandline" autocomplete="off" Class="cmdline" autofocus="true" @bind-Value="@command.Text"/>
                 </p>
             </div>
         </div>
     </EditForm>
 </div>
+
