@@ -55,7 +55,6 @@ body {
     color: #96b38a;
     margin-right: 7px;
     display: -webkit-box;
-    -webkit-box-pack: center;
     -webkit-box-orient: vertical;
     display: -moz-box;
     -moz-box-pack: center;
@@ -74,14 +73,7 @@ body {
     margin: 0;
     width: 100%;
     font: inherit;
-    border: none;
+    border: 1px solid #96b38a;
+    border-color: #96b38a !important;
     color: inherit;
-}
-
-.ls-files {
-    height: 45px;
-    -webkit-column-width: 100px;
-    -moz-column-width: 100px;
-    -o-column-width: 100px;
-    column-width: 100px;
 }
