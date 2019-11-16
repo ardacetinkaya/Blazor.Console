@@ -12,7 +12,9 @@ namespace Blazor.Console
         protected string Running = string.Empty;
 
         protected Input Command = new Input();
-
+        protected string Disabled { get; set; } = null;
+        
+        protected string Placeholder { get; set; } = "Enter a command, type 'help' for avaliable commands.";
         [Parameter] public Dictionary<string, ICommand> Commands { get; set; }
         [Inject] public IServiceProvider ServiceProvider { get; set; }
         [Inject] public ICommandRunning RunningCommand { get; set; }
@@ -50,12 +52,7 @@ namespace Blazor.Console
         });
 
         public string Version() => System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
-        protected Dictionary<string, object> Attributes()
-        {
-            var handy = new Dictionary<string, object>();
-            handy.Add("autofocus", true);
-            return handy;
-        }
+
         protected async Task Execute(EditContext context)
         {
             var input = context.Model as Input;
@@ -70,10 +67,14 @@ namespace Blazor.Console
                 }
                 else
                 {
+                    Disabled = "disabled";
+                    Placeholder="Please wait for command to be completed.";
                     Output += $"<p>";
                     Output += $"{cmd.ToString()}";
                     Output += $"{await cmd.Result()}";
                     Output += $"</p>";
+                    Disabled = null;
+                    Placeholder="Enter a command, type 'help' for avaliable commands.";
                 }
             }
         }

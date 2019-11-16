@@ -79,7 +79,8 @@ body {
     margin: 0;
     width: 100%;
     font: inherit;
-    border-color: black !important;
+    padding: 0;
+    border: 0 !important;
     color: inherit;
 }
 

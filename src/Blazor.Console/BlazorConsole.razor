@@ -11,16 +11,16 @@
 
 <div id="container">
     <pre>
-    <code>@((MarkupString)Output)</code>
-    <code>@((MarkupString)Running)</code>
+        <code>@((MarkupString)Output)</code>
+        <code>@((MarkupString)Running)</code>
     </pre>
-
     <EditForm OnValidSubmit="Execute" autocomplete="off" Model="Command" novalidate> 
         <div id="input-line" class="input-line">
-            <div class="prompt">@System.DateTime.Now.ToShortTimeString() > </div><div>
-                <p>
-                    <InputText id="commandline" autocomplete="off" Class="cmdline" @attributes="Attributes()"  placeholder="Enter a command, type 'help' for avaliable commands." @bind-Value="@Command.Text" />
-                </p>
+            <div class="prompt">
+                @System.DateTime.Now.ToShortTimeString() > 
+            </div>
+            <div>
+                <InputText id="commandline" autocomplete="off" Class="cmdline" disabled="@Disabled"  placeholder="@Placeholder" @bind-Value="@Command.Text" />
             </div>
         </div>
     </EditForm>
