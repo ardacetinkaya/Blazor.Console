@@ -1,19 +1,23 @@
 @using Microsoft.AspNetCore.Components.Forms
+@using Blazor.Console.Command
 
+@inject IServiceProvider ServiceProvider
+@inject ICommandRunning RunningCommand
 @inherits Blazor.Console.BlazorConsoleComponent
 
 <h5>Blazor.Console [Version 1.0.0]</h5>
 <h6>@System.DateTime.Now.ToShortDateString()</h6>
 <div id="container">
     <pre>
-        <code>@((MarkupString)terminal)</code>
+    <code>@((MarkupString)Output)</code>
+    <code>@((MarkupString)Running)</code>
     </pre>
 
-    <EditForm OnValidSubmit="Execute" autocomplete="off" Model="command">
+    <EditForm OnValidSubmit="Execute" autocomplete="off" Model="Command">
         <div id="input-line" class="input-line">
             <div class="prompt">></div><div>
                 <p>
-                    <InputText id="commandline" autocomplete="off" Class="cmdline" autofocus="true" @bind-Value="@command.Text"/>
+                    <InputText id="commandline" autocomplete="off" Class="cmdline" autofocus="true" @bind-Value="@Command.Text" />
                 </p>
             </div>
         </div>
