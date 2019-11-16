@@ -13,7 +13,7 @@ namespace Blazor.Console
 
         protected Input Command = new Input();
 
-        [Parameter] public Dictionary<string,ICommand> Commands { get; set; }
+        [Parameter] public Dictionary<string, ICommand> Commands { get; set; }
         [Inject] public IServiceProvider ServiceProvider { get; set; }
         [Inject] public ICommandRunning RunningCommand { get; set; }
 
@@ -49,6 +49,13 @@ namespace Blazor.Console
             });
         });
 
+        public string Version() => System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        protected Dictionary<string, object> Attributes()
+        {
+            var handy = new Dictionary<string, object>();
+            handy.Add("autofocus", true);
+            return handy;
+        }
         protected async Task Execute(EditContext context)
         {
             var input = context.Model as Input;

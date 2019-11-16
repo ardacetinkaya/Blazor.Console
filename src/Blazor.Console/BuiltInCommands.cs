@@ -69,7 +69,7 @@
         {
             StringBuilder sb = new StringBuilder();
             sb.Append($"<p>");
-            sb.Append($"<span style='color:white'>{System.Reflection.Assembly.GetExecutingAssembly()}</span>");
+            sb.Append($"<span style='color:white'>{System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString()}</span>");
             sb.Append($"</p>");
 
             Output = sb.ToString();

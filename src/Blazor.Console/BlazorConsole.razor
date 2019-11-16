@@ -3,9 +3,10 @@
 
 @inject IServiceProvider ServiceProvider
 @inject ICommandRunning RunningCommand
+
 @inherits Blazor.Console.BlazorConsoleComponent
 
-<h5>Blazor.Console [Version 1.0.0]</h5>
+<h5>Blazor.Console [Version @Version()]</h5>
 <h6>@System.DateTime.Now.ToShortDateString()</h6>
 
 <div id="container">
@@ -18,7 +19,7 @@
         <div id="input-line" class="input-line">
             <div class="prompt">@System.DateTime.Now.ToShortTimeString() > </div><div>
                 <p>
-                    <InputText id="commandline" autocomplete="off" Class="cmdline" autofocus="true" placeholder="Enter a command, type 'help' for avaliable commands." @bind-Value="@Command.Text" />
+                    <InputText id="commandline" autocomplete="off" Class="cmdline" @attributes="Attributes()"  placeholder="Enter a command, type 'help' for avaliable commands." @bind-Value="@Command.Text" />
                 </p>
             </div>
         </div>
