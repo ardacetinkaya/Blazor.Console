@@ -17,7 +17,7 @@
     <EditForm OnValidSubmit="Execute" autocomplete="off" Model="Command" novalidate> 
         <div id="input-line" class="input-line">
             <div class="prompt">
-                @System.DateTime.Now.ToShortTimeString() > 
+                Command > 
             </div>
             <div>
                 <InputText id="commandline" autocomplete="off" Class="cmdline" disabled="@Disabled"  placeholder="@Placeholder" @bind-Value="@Command.Text" />
