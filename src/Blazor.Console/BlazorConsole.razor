@@ -7,17 +7,18 @@
 
 <h5>Blazor.Console [Version 1.0.0]</h5>
 <h6>@System.DateTime.Now.ToShortDateString()</h6>
+
 <div id="container">
     <pre>
     <code>@((MarkupString)Output)</code>
     <code>@((MarkupString)Running)</code>
     </pre>
 
-    <EditForm OnValidSubmit="Execute" autocomplete="off" Model="Command">
+    <EditForm OnValidSubmit="Execute" autocomplete="off" Model="Command" novalidate> 
         <div id="input-line" class="input-line">
-            <div class="prompt">></div><div>
+            <div class="prompt">@System.DateTime.Now.ToShortTimeString() > </div><div>
                 <p>
-                    <InputText id="commandline" autocomplete="off" Class="cmdline" autofocus="true" @bind-Value="@Command.Text" />
+                    <InputText id="commandline" autocomplete="off" Class="cmdline" autofocus="true" placeholder="Enter a command, type 'help' for avaliable commands." @bind-Value="@Command.Text" />
                 </p>
             </div>
         </div>

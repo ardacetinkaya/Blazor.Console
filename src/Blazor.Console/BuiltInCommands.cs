@@ -12,9 +12,9 @@
         {
             StringBuilder sb = new StringBuilder();
             sb.Append($"<p>");
-            sb.Append($"<span style='color:white;display:block'>{string.Format("help\t\tDisplays commands that are available")}</span>");
-            sb.Append($"<span style='color:white;display:block'>{string.Format("version\t\tDisplays commands that are available")}</span>");
-            sb.Append($"<span style='color:white;display:block'>{string.Format("os\t\tDisplays commands that are available")}</span>");
+            sb.Append($"<span style='color:white;display:block'>{string.Format("help\t\tShow command line help with available commands.")}</span>");
+            sb.Append($"<span style='color:white;display:block'>{string.Format("version\t\tDisplays Blazor.Console version.")}</span>");
+            sb.Append($"<span style='color:white;display:block'>{string.Format("os\t\tDisplays the current opearting system.")}</span>");
             sb.Append($"</p>");
 
             Output = sb.ToString();
