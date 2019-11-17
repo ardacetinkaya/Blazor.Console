@@ -8,7 +8,7 @@
     {
         public string Output { get; set; }
 
-        public async Task<string> Run()
+        public async Task<string> Run(params string[] arguments)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append($"<p>");
@@ -32,7 +32,7 @@
             _commandText = commandText;
         }
 
-        public async Task<string> Run()
+        public async Task<string> Run(params string[] arguments)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -48,7 +48,7 @@
     {
         public string Output { get; set; }
 
-        public async Task<string> Run()
+        public async Task<string> Run(params string[] arguments)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append($"<p>");
@@ -65,7 +65,7 @@
     {
         public string Output { get; set; }
 
-        public async Task<string> Run()
+        public async Task<string> Run(params string[] arguments)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append($"<p>");
@@ -87,7 +87,7 @@
         {
             _console = console;
         }
-        public async Task<string> Run()
+        public async Task<string> Run(params string[] arguments)
         {
             _console = Output = string.Empty;
             return Output;
@@ -107,7 +107,7 @@
             _loadingService = loadingService;
         }
 
-        public async Task<string> Run()
+        public async Task<string> Run(params string[] arguments)
         {
             await _loadingService.StartCommandAsync(async (task) =>
              {

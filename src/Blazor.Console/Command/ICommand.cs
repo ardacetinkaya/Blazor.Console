@@ -8,7 +8,7 @@
     public interface ICommand
     {
         string Output { get; set; }
-        Task<string> Run();
+        Task<string> Run(params string[] arguments);
     }
 
     public interface IHelpCommand:ICommand

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace Blazor.Console.Command
 {
@@ -18,27 +19,46 @@ namespace Blazor.Console.Command
         public DateTime Time { get; } = DateTime.Now;
 
         readonly ICommandRunning _runningCommand;
-
+        readonly IEnumerable<string> _commands;
+        readonly ILogger<CommandInput> _logger;
         IServiceProvider _provider;
 
-        public CommandInput(IServiceProvider provider, ICommandRunning runningCommand)
+        public CommandInput(ILogger<CommandInput> logger, IServiceProvider provider, ICommandRunning runningCommand)
         {
             _provider = provider;
             _runningCommand = runningCommand;
+            _logger = logger;
+            _commands = new List<string>()
+            {
+                {"os"}
+                ,{"help"}
+                ,{"version"}
+            };
         }
 
         public async Task<string> Result()
         {
             string output = string.Empty;
-            ICommand command=null;
+            ICommand command = null;
+            string[] arguments = null;
             try
             {
+
+                if (Text.Trim().IndexOf(" ") == -1)
+                {
+
+                }
+                else
+                {
+                    arguments = Text.Split(' ',2,StringSplitOptions.RemoveEmptyEntries);
+                }
+
                 command = (Text switch
                 {
-                    "lng" => _ = _provider.GetService<ILongRunningCommand>(),
-                    "os" => _ = _provider.GetService<IOSCommand>(),
-                    "version" => _ = _provider.GetService<IVersionCommand>(),
-                    "help" => _ = _provider.GetService<IHelpCommand>(),
+                    "lng" => _ = _provider.GetRequiredService<ILongRunningCommand>(),
+                    "os" => _ = _provider.GetRequiredService<IOSCommand>(),
+                    "version" => _ = _provider.GetRequiredService<IVersionCommand>(),
+                    "help" => _ = _provider.GetRequiredService<IHelpCommand>(),
                     _ => _ = new InvalidCommand(Text)
                 });
             }
@@ -48,7 +68,7 @@ namespace Blazor.Console.Command
             }
             finally
             {
-                output = await command.Run();
+                output = await command.Run(arguments);
             }
 
 

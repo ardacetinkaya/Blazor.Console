@@ -3,6 +3,7 @@ namespace Blazor.Console
     using Blazor.Console.Command;
     using Microsoft.AspNetCore.Components;
     using Microsoft.AspNetCore.Components.Forms;
+    using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -13,12 +14,12 @@ namespace Blazor.Console
 
         protected Input Command = new Input();
         protected string Disabled { get; set; } = null;
-        
+
         protected string Placeholder { get; set; } = "Enter a command, type 'help' for avaliable commands.";
         [Parameter] public Dictionary<string, ICommand> Commands { get; set; }
         [Inject] public IServiceProvider ServiceProvider { get; set; }
         [Inject] public ICommandRunning RunningCommand { get; set; }
-
+        [Inject] public ILogger<CommandInput> Logger { get; set; }
         public BlazorConsoleComponent()
         {
         }
@@ -58,7 +59,7 @@ namespace Blazor.Console
             var input = context.Model as Input;
             if (!string.IsNullOrEmpty(input.Text))
             {
-                var cmd = new CommandInput(ServiceProvider, RunningCommand);
+                var cmd = new CommandInput(Logger, ServiceProvider, RunningCommand);
                 cmd.Text = input.Text;
                 input.Text = string.Empty;
                 if (cmd.Text.ToLower() == "clear" || cmd.Text.ToLower() == "clr")
@@ -68,13 +69,13 @@ namespace Blazor.Console
                 else
                 {
                     Disabled = "disabled";
-                    Placeholder="Please wait for command to be completed.";
+                    Placeholder = "Please wait for command to be completed.";
                     Output += $"<p>";
                     Output += $"{cmd.ToString()}";
                     Output += $"{await cmd.Result()}";
                     Output += $"</p>";
                     Disabled = null;
-                    Placeholder="Enter a command, type 'help' for avaliable commands.";
+                    Placeholder = "Enter a command, type 'help' for avaliable commands.";
                 }
             }
         }
