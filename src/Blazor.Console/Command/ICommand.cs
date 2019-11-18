@@ -1,4 +1,4 @@
-﻿namespace Blazor.Console.Command
+namespace Blazor.Console.Command
 {
     using System;
     using System.Collections.Generic;
@@ -8,27 +8,28 @@
     public interface ICommand
     {
         string Output { get; set; }
+        string Help { get;}
         Task<string> Run(params string[] arguments);
     }
 
-    public interface IHelpCommand:ICommand
+    interface IHelpCommand:ICommand
     {
-
+        Dictionary<string, ICommand> Commands { get; set; }
     }
 
-    public interface IOSCommand : ICommand
+    interface IOSCommand : ICommand
     { }
 
-    public interface IInvalidCommand:ICommand
+    interface IInvalidCommand:ICommand
     {
 
     }
-    public interface IVersionCommand : ICommand
+    interface IVersionCommand : ICommand
     {
 
     }
 
-    public interface ILongRunningCommand : ICommand
+    interface ILongRunningCommand : ICommand
     {
 
     }
