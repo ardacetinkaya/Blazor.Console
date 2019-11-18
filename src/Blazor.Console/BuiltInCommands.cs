@@ -18,6 +18,7 @@ namespace Blazor.Console
             sb.Append($"<span style='color:white;display:block'>{string.Format("help\t\tShow command line help with available commands.")}</span>");
             sb.Append($"<span style='color:white;display:block'>{string.Format("version\t\tDisplays Blazor.Console version.")}</span>");
             sb.Append($"<span style='color:white;display:block'>{string.Format("os\t\tDisplays the current opearting system.")}</span>");
+            sb.Append($"<span style='color:white;display:block'>{string.Format("clear\t\tClears the console.")}</span>");
             sb.Append($"</p>");
 
             foreach (var item in Commands)
@@ -114,7 +115,7 @@ namespace Blazor.Console
                  }
 
                  task.Maintext = "Execution is completed.";
-             }, "console");
+             });
 
             StringBuilder sb = new StringBuilder();
             sb.Append($"<p>");

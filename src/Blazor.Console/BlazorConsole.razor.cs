@@ -29,7 +29,7 @@ namespace Blazor.Console
         protected override void OnInitialized()
         {
             RunningCommand = new RunningCommand();
-            RunningCommand.SubscribeToCommandProgressChanged("console", OnProgressChangedEvent);
+            RunningCommand.SubscribeToCommandProgressChanged(OnProgressChangedEvent);
 
             cmd = new CommandInput(Logger, ServiceProvider, RunningCommand);
 
@@ -88,7 +88,7 @@ namespace Blazor.Console
 
         public void Dispose()
         {
-            RunningCommand?.UnsubscribeFromCommandProgressChanged("console", OnProgressChangedEvent);
+            RunningCommand?.UnsubscribeFromCommandProgressChanged(OnProgressChangedEvent);
         }
     }
 }

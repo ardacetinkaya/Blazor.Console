@@ -10,19 +10,16 @@ namespace Blazor.Console.Command
     {
         private static ConcurrentDictionary<string, TaskContext> _tasks = new ConcurrentDictionary<string, TaskContext>();
 
-        public async Task StartCommandAsync(Func<ICommandStatus, Task> action, string context = "", string maintext = null, string subtext = null)
+        public async Task StartCommandAsync(Func<ICommandStatus, Task> action, string maintext = null, string subtext = null)
         {
-            if (context == null)
-                context = string.Empty;
-
-            var task = new RunningTask(context, maintext, subtext);
-            if (!_tasks.TryGetValue(context, out TaskContext c))
+            var task = new RunningTask("console", maintext, subtext);
+            if (!_tasks.TryGetValue("console", out TaskContext c))
             {
                 c = new TaskContext
                 {
                     Tasks = { task }
                 };
-                _tasks.TryAdd(context, c);
+                _tasks.TryAdd("console", c);
             }
             else
             {
@@ -44,21 +41,21 @@ namespace Blazor.Console.Command
             }
         }
 
-        public void SubscribeToCommandProgressChanged(string context, Action<ICommandStatus> action)
+        public void SubscribeToCommandProgressChanged(Action<ICommandStatus> action)
         {
-            if (!_tasks.TryGetValue(context, out TaskContext c))
+            if (!_tasks.TryGetValue("console", out TaskContext c))
             {
                 c = new TaskContext();
-                _tasks.TryAdd(context, c);
+                _tasks.TryAdd("console", c);
             }
 
             c.Changed += action;
             c.FireChanged();
         }
 
-        public void UnsubscribeFromCommandProgressChanged(string context, Action<ICommandStatus> action)
+        public void UnsubscribeFromCommandProgressChanged(Action<ICommandStatus> action)
         {
-            if (_tasks.TryGetValue(context, out TaskContext c))
+            if (_tasks.TryGetValue("console", out TaskContext c))
             {
                 c.Changed -= action;
             }
