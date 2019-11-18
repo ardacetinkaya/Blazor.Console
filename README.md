@@ -13,7 +13,9 @@ Real life scenario examples;
 
 ### Usage ###
 
-Startup.cs
+Check Demo project(BlazorConsoleDemo.csproj) for usage;
+
+Add following extensions to services and application within Startup.cs
 
 ```cs
 public void ConfigureServices(IServiceCollection services)
@@ -27,7 +29,7 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 }
 ```
 
-.razor file
+Add <BlazorConsole> tag into needed view file(ex: Index.razor)
 
 ```html
 @page "/"
@@ -36,7 +38,7 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 <BlazorConsole />
 ```
 
-Also add CSS reference to _HOST.cshtml
+And to have fancy UI add CSS to host file, _HOST.cshtml
 
 ```html
 <link href="Blazor.Console/styles.css" rel="stylesheet" />
@@ -47,5 +49,5 @@ Also add CSS reference to _HOST.cshtml
 <img src="https://github.com/ardacetinkaya/Blazor.Console/blob/master/screenshots/2.png" >
 
 ### References ###
-- For long running commands, progress tracker: https://github.com/h3x4d3c1m4l/Blazor.LoadingIndicator 
+- Some commands might be long running tasks, Blazor.Console use some features of a great component for this kind of requirement. Please also check  https://github.com/h3x4d3c1m4l/Blazor.LoadingIndicator if you need a loading indicator for a Blazor app.
 
