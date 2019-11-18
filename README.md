@@ -85,6 +85,71 @@ Adding commands to Blazor.Console is not complicated. First create a command cla
 }
 ```
 
+### Long running Commands ###
+
+Sometimes commands might have a long period. For these kind of commands inject ```IRunningCommand``` 
+
+```cshtml
+@page "/"
+@using Blazor.Console.Command
+
+@inject IRunningCommand RunningCommand
+
+
+<h1>Hello, world!</h1>
+
+<BlazorConsole @ref="console" />
+
+@code
+{
+    BlazorConsole console;
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        console.Commands.Add("lng", new LongCommand(RunningCommand));
+        
+        return base.OnAfterRenderAsync(firstRender);
+    }
+
+    public class LongCommand : ICommand
+    {
+        readonly IRunningCommand _loadingService;
+
+        public string Output { get; set; }
+        public string Help { get; };
+
+        public LongCommand(IRunningCommand loadingService)
+        {
+            _loadingService = loadingService;
+        }
+
+        public async Task<string> Run(params string[] arguments)
+        {
+            await _loadingService.StartCommandAsync(async (task) =>
+             {
+                 task.Maintext = "Execution is started...";
+                 var i = 0;
+
+                 while (i < 10)
+                 {
+                     await Task.Delay(550);
+                     task.Subtext = "Progress: " + i++;
+                 }
+
+                 task.Maintext = "Execution is completed.";
+             });
+
+            Output = "This was a long running command";
+
+            return Output;
+        }
+
+    }
+}
+
+```
+
+<img src="https://github.com/ardacetinkaya/Blazor.Console/blob/master/screenshots/3.gif" >
 
 
 <img src="https://github.com/ardacetinkaya/Blazor.Console/blob/master/screenshots/2.png" >

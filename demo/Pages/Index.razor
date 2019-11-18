@@ -1,6 +1,9 @@
 ﻿@page "/"
 @using Blazor.Console.Command
 
+@inject IRunningCommand RunningCommand
+
+
 <h1>Hello, world!</h1>
 
 <BlazorConsole @ref="console" />
@@ -12,6 +15,7 @@
     protected override Task OnAfterRenderAsync(bool firstRender)
     {
         console.Commands.Add("test", new CommandExample());
+        console.Commands.Add("lng", new LongCommand(RunningCommand));
         
         return base.OnAfterRenderAsync(firstRender);
     }
@@ -26,5 +30,40 @@
 
             return Output;
         }
+    }
+
+    public class LongCommand : ICommand
+    {
+        readonly IRunningCommand _loadingService;
+
+        public string Output { get; set; }
+        public string Help { get; }
+
+        public LongCommand(IRunningCommand loadingService)
+        {
+            _loadingService = loadingService;
+        }
+
+        public async Task<string> Run(params string[] arguments)
+        {
+            await _loadingService.StartCommandAsync(async (task) =>
+             {
+                 task.Maintext = "Execution is started...";
+                 var i = 0;
+
+                 while (i < 10)
+                 {
+                     await Task.Delay(550);
+                     task.Subtext = "Progress: " + i++;
+                 }
+
+                 task.Maintext = "Execution is completed.";
+             });
+
+            Output = "This was a long running command";
+
+            return Output;
+        }
+
     }
 }

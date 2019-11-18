@@ -41,8 +41,7 @@ namespace Blazor.Console
             {
                 if (!string.IsNullOrEmpty(task.Maintext))
                 {
-                    Running = $"<p class='progress'><span class='main'>{task.Maintext}</span><span class='subtext'>{task.Subtext}</span></p>";
-
+                    Running = $"<p class='prgs'><span class='main'>{task.Maintext}</span><span class='subtext'>{task.Subtext}</span></p>";
                 }
             }
             else

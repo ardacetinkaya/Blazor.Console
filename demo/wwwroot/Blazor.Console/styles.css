@@ -46,16 +46,16 @@ body {
         margin-bottom:10px;
     }
 
-    #console #container .progress {
+    #console #container .prgs {
         margin-top: -30px;
     }
 
-        #console #container .progress .main {
-            display: block
+        #console #container .prgs .main {
+            display: block !important;
         }
 
-        #console #container .progress .subtext {
-            display: block
+        #console #container .prgs .subtext {
+            display: block !important;
         }
 
     #console #container output {

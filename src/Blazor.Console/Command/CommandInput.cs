@@ -64,7 +64,6 @@ namespace Blazor.Console.Command
             {
                 command = (Text switch
                 {
-                    "lng" => _ = _provider.GetRequiredService<ILongRunningCommand>(),
                     "os" => _ = _provider.GetRequiredService<IOSCommand>(),
                     "version" => _ = _provider.GetRequiredService<IVersionCommand>(),
                     "help" => _ = _provider.GetRequiredService<IHelpCommand>(),
