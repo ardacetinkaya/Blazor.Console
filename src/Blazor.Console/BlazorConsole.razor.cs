@@ -14,7 +14,6 @@ namespace Blazor.Console
 
         protected Input Command = new Input();
         protected string Disabled { get; set; } = null;
-
         protected string Placeholder { get; set; } = "Enter a command, type 'help' for avaliable commands.";
         [Parameter] public Dictionary<string, ICommand> Commands { get; set; }
         [Inject] public IServiceProvider ServiceProvider { get; set; }
@@ -36,7 +35,7 @@ namespace Blazor.Console
             {
                 if (!string.IsNullOrEmpty(task.Maintext))
                 {
-                    Running = $"<p style='margin-top:-55px'><span style='display:block'>{task.Maintext}</span><span style='display:block'>{ task.Subtext}</span></p>";
+                    Running = $"<p class='progress'><span class='main'>{task.Maintext}</span><span class='subtext'>{task.Subtext}</span></p>";
 
                 }
             }
@@ -62,6 +61,7 @@ namespace Blazor.Console
                 var cmd = new CommandInput(Logger, ServiceProvider, RunningCommand);
                 cmd.Text = input.Text;
                 input.Text = string.Empty;
+
                 if (cmd.Text.ToLower() == "clear" || cmd.Text.ToLower() == "clr")
                 {
                     Output = string.Empty;
