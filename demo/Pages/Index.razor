@@ -23,7 +23,7 @@
     public class CommandExample : ICommand
     {
         public string Output { get; set; }
-        public string Help { get; } = "Description of a Command Example";
+        public string Help { get; } = "Demo - Description of a command";
         public async Task<string> Run(params string[] arguments)
         {
             Output = "Hello from a command";
@@ -37,7 +37,7 @@
         readonly IRunningCommand _loadingService;
 
         public string Output { get; set; }
-        public string Help { get; }="Long running command example.";
+        public string Help { get; }="Demo - Long running command.";
 
         public LongCommand(IRunningCommand loadingService)
         {
