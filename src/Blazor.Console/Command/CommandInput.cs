@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -77,7 +77,7 @@ namespace Blazor.Console.Command
 
         public override string ToString()
         {
-            return $"<span style='color:white;font-weight:bold'>{Time.ToShortTimeString()} > </span><span style='color:yellow'>{Text}{Environment.NewLine}</span>";
+            return $"<span class='header'>{Time.ToString("HH:mm")} > </span><span class='command'>{Text}{Environment.NewLine}</span>";
         }
     }
 }
