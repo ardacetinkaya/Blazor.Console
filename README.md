@@ -48,6 +48,8 @@ And to have fancy UI add CSS to host file, _HOST.cshtml
 <link href="Blazor.Console/styles.css" rel="stylesheet" />
 ```
 
+### Commands ###
+
 Adding commands to Blazor.Console is not complicated. First create a command class, implement it with ```ICommand``` interface. Then add the command(s) to the BlazorConsole's Commands as below;
 
 ```html
