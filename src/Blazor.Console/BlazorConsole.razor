@@ -6,23 +6,25 @@
 
 @inherits Blazor.Console.BlazorConsoleComponent
 
-<h5>Blazor.Console [Version @Version()]</h5>
-<h6>@System.DateTime.Now.ToShortDateString()</h6>
-
-<div id="container">
-    <pre>
-        <code>@((MarkupString)Output)</code>
-        <code>@((MarkupString)Running)</code>
-    </pre>
-    <EditForm OnValidSubmit="Execute" autocomplete="off" Model="Command" novalidate> 
-        <div id="input-line" class="input-line">
-            <div class="prompt">
-                Command > 
-            </div>
-            <div>
-                <InputText id="commandline" autocomplete="off" Class="cmdline" disabled="@Disabled"  placeholder="@Placeholder" @bind-Value="@Command.Text" />
-            </div>
+    <div id="console">
+        <div id="header">
+            <h4>Blazor.Console [Version @Version()]</h4>
+            <h5>> @System.DateTimeOffset.Now.ToString("dd MMMM yyyy HH:mm:ss \"GMT\"zzz", System.Globalization.CultureInfo.InvariantCulture)</h5>
         </div>
-    </EditForm>
-</div>
-
+        <div id="container">
+            <pre>
+                <code>@((MarkupString)Output)</code>
+                <code>@((MarkupString)Running)</code>
+            </pre>
+            <EditForm OnValidSubmit="Execute" autocomplete="off" Model="Command" novalidate>
+                <div id="input-line" class="input-line">
+                    <div class="prompt">
+                        Command >
+                    </div>
+                    <div>
+                        <InputText id="commandline" autocomplete="off" Class="cmdline" disabled="@Disabled" placeholder="@Placeholder" @bind-Value="@Command.Text" />
+                    </div>
+                </div>
+            </EditForm>
+        </div>
+    </div>
