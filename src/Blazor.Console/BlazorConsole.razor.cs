@@ -11,22 +11,28 @@ namespace Blazor.Console
     {
         protected string Output = string.Empty;
         protected string Running = string.Empty;
-
         protected Input Command = new Input();
         protected string Disabled { get; set; } = null;
         protected string Placeholder { get; set; } = "Enter a command, type 'help' for avaliable commands.";
         [Parameter] public Dictionary<string, ICommand> Commands { get; set; }
         [Inject] public IServiceProvider ServiceProvider { get; set; }
         [Inject] public ICommandRunning RunningCommand { get; set; }
-        [Inject] public ILogger<CommandInput> Logger { get; set; }
+        [Inject] internal ILogger<CommandInput> Logger { get; set; }
+
+        CommandInput cmd;
+
         public BlazorConsoleComponent()
         {
+            Commands = new Dictionary<string, ICommand>();
         }
 
         protected override void OnInitialized()
         {
             RunningCommand = new CommandRunning();
             RunningCommand.SubscribeToCommandProgressChanged("console", OnProgressChangedEvent);
+
+            cmd = new CommandInput(Logger, ServiceProvider, RunningCommand);
+
         }
 
         private Action<ICommandStatus> OnProgressChangedEvent => new Action<ICommandStatus>((ICommandStatus task) =>
@@ -58,7 +64,7 @@ namespace Blazor.Console
             var input = context.Model as Input;
             if (!string.IsNullOrEmpty(input.Text))
             {
-                var cmd = new CommandInput(Logger, ServiceProvider, RunningCommand);
+                cmd.AddCommands(Commands);
                 cmd.Text = input.Text;
                 input.Text = string.Empty;
 
