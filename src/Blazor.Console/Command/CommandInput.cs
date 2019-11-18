@@ -6,8 +6,7 @@ namespace Blazor.Console.Command
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.Extensions.Logging;
-    using CommandLine;
-    
+
     public class Input
     {
         public string Text { get; set; }
@@ -27,12 +26,12 @@ namespace Blazor.Console.Command
             }
         }
 
-        readonly ICommandRunning _runningCommand;
+        readonly IRunningCommand _runningCommand;
         readonly Dictionary<string, ICommand> _commands;
         readonly ILogger<CommandInput> _logger;
         readonly IServiceProvider _provider;
 
-        public CommandInput(ILogger<CommandInput> logger, IServiceProvider provider, ICommandRunning runningCommand)
+        public CommandInput(ILogger<CommandInput> logger, IServiceProvider provider, IRunningCommand runningCommand)
         {
             _provider = provider;
             _runningCommand = runningCommand;

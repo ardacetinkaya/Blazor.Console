@@ -90,12 +90,12 @@ namespace Blazor.Console
 
     internal class LongCommand : ILongRunningCommand
     {
-        readonly ICommandRunning _loadingService;
+        readonly IRunningCommand _loadingService;
 
         public string Output { get; set; }
         public string Help { get; }
 
-        public LongCommand(ICommandRunning loadingService)
+        public LongCommand(IRunningCommand loadingService)
         {
             _loadingService = loadingService;
         }

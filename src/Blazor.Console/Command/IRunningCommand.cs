@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Blazor.Console.Command
 {
-    public interface ICommandRunning
+    public interface IRunningCommand
     {
         Task StartCommandAsync(Func<ICommandStatus, Task> action, string context = "", string maintext = null, string subtext = null);
         void SubscribeToCommandProgressChanged(string context, Action<ICommandStatus> action);

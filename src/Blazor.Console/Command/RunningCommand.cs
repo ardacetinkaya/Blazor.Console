@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Blazor.Console.Command
 {
-    public class CommandRunning : ICommandRunning
+    public class RunningCommand : IRunningCommand
     {
         private static ConcurrentDictionary<string, TaskContext> _tasks = new ConcurrentDictionary<string, TaskContext>();
 

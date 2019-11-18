@@ -11,7 +11,7 @@
         public static IServiceCollection AddConsole(this IServiceCollection serviceCollection,Action<ConsoleOptions> options=null)
         {
 
-            serviceCollection.AddTransient<ICommandRunning, CommandRunning>();
+            serviceCollection.AddTransient<IRunningCommand, RunningCommand>();
             var consoleOptions = new ConsoleOptions();
 
             if (options != null)
@@ -19,8 +19,7 @@
             
                 options.Invoke(consoleOptions);
             }
-
-            serviceCollection.AddTransient<ILongRunningCommand, LongCommand>();
+            
             if (consoleOptions.UseDefaultServices)
             {
                 serviceCollection.AddTransient<IHelpCommand, HelpCommand>();

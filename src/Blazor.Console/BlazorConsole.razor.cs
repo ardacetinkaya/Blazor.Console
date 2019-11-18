@@ -15,8 +15,8 @@ namespace Blazor.Console
         protected string Disabled { get; set; } = null;
         protected string Placeholder { get; set; } = "Enter a command, type 'help' for avaliable commands.";
         [Parameter] public Dictionary<string, ICommand> Commands { get; set; }
-        [Inject] public IServiceProvider ServiceProvider { get; set; }
-        [Inject] public ICommandRunning RunningCommand { get; set; }
+        [Inject] internal IServiceProvider ServiceProvider { get; set; }
+        [Inject] public IRunningCommand RunningCommand { get; set; }
         [Inject] internal ILogger<CommandInput> Logger { get; set; }
 
         CommandInput cmd;
@@ -28,7 +28,7 @@ namespace Blazor.Console
 
         protected override void OnInitialized()
         {
-            RunningCommand = new CommandRunning();
+            RunningCommand = new RunningCommand();
             RunningCommand.SubscribeToCommandProgressChanged("console", OnProgressChangedEvent);
 
             cmd = new CommandInput(Logger, ServiceProvider, RunningCommand);

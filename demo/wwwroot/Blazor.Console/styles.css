@@ -15,29 +15,63 @@ body {
     background-color: black;
 }
 
-#container {
+#console #header pre {
+    font-size: 9pt;
+    color: #757575;
+    margin-left: -50px;
+}
+
+#console #container {
     padding: .1em 1.5em 1em 1em;
+    margin-top: -40px;
 }
 
-#container pre {
-    height: auto;
-    margin-bottom: -50px;
-}
+    #console #container pre {
+        height: auto;
+        margin-bottom: 0px;
+        color: #757575;
+    }
 
-#container output {
-    clear: both;
-    width: 100%;
-}
+        #console #container pre .header {
+            font-weight: bold;
+            color: #96b38a;
+        }
 
-#container output h3 {
-    margin: 0;
-}
+        #console #container pre .command {
+            color: yellow;
+        }
 
-#container output pre {
-    margin: 0;
-}
+    #console #container p {
+        margin: 0px;
+        margin-bottom:10px;
+    }
 
-.input-line {
+    #console #container .progress {
+        margin-top: -30px;
+    }
+
+        #console #container .progress .main {
+            display: block
+        }
+
+        #console #container .progress .subtext {
+            display: block
+        }
+
+    #console #container output {
+        clear: both;
+        width: 100%;
+    }
+
+        #console #container output h3 {
+            margin: 0;
+        }
+
+        #console #container output pre {
+            margin: 0;
+        }
+
+#console .input-line {
     display: -webkit-box;
     -webkit-box-orient: horizontal;
     -webkit-box-align: stretch;
@@ -50,13 +84,13 @@ body {
     clear: both;
 }
 
-.input-line>div:nth-child(2) {
-    -webkit-box-flex: 1;
-    -moz-box-flex: 1;
-    box-flex: 1;
-}
+    #console .input-line > div:nth-child(2) {
+        -webkit-box-flex: 1;
+        -moz-box-flex: 1;
+        box-flex: 1;
+    }
 
-.prompt {
+#console .prompt {
     white-space: nowrap;
     color: #96b38a;
     margin-right: 7px;
@@ -73,7 +107,7 @@ body {
     user-select: none;
 }
 
-.cmdline {
+#console .cmdline {
     outline: none;
     background-color: transparent;
     margin: 0;

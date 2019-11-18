@@ -1,3 +1,32 @@
 ﻿@page "/"
+@using Blazor.Console.Command
+
 <h1>Hello, world!</h1>
-<BlazorConsole />
+
+<BlazorConsole @ref="console" />
+
+@code
+{
+    BlazorConsole console;
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        console.Commands.Add("test", new CommandExample());
+        
+
+        return base.OnAfterRenderAsync(firstRender);
+
+    }
+
+    public class CommandExample : ICommand
+    {
+        public string Output { get; set; }
+        public string Help { get; } = "Description of a Command Example";
+        public async Task<string> Run(params string[] arguments)
+        {
+            Output = "Hello from a command";
+
+            return Output;
+        }
+    }
+}
