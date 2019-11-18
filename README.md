@@ -44,6 +44,43 @@ And to have fancy UI add CSS to host file, _HOST.cshtml
 <link href="Blazor.Console/styles.css" rel="stylesheet" />
 ```
 
+Adding commands to Blazor.Console is not complicated. First create a command class, implement it with ```ICommand``` interface. Then add the command(s) to the BlazorConsole's Commands as below;
+
+```html
+@page "/"
+@using Blazor.Console.Command
+
+<h1>Hello, world!</h1>
+
+<BlazorConsole @ref="console" />
+
+@code
+{
+    BlazorConsole console;
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        console.Commands.Add("test", new CommandExample());
+        
+        return base.OnAfterRenderAsync(firstRender);
+    }
+
+    public class CommandExample : ICommand
+    {
+        public string Output { get; set; }
+        public string Help { get; } = "Description of a Command Example";
+        public async Task<string> Run(params string[] arguments)
+        {
+            Output = "Hello from a command";
+
+            return Output;
+        }
+    }
+}
+```
+
+
+
 <img src="https://github.com/ardacetinkaya/Blazor.Console/blob/master/screenshots/1.png" >
 
 <img src="https://github.com/ardacetinkaya/Blazor.Console/blob/master/screenshots/2.png" >
