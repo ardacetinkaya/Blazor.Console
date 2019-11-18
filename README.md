@@ -52,7 +52,7 @@ And to have fancy UI add CSS to host file, _HOST.cshtml
 
 Adding commands to Blazor.Console is not complicated. First create a command class, implement it with ```ICommand``` interface. Then add the command(s) to the BlazorConsole's Commands as below;
 
-```html
+```cshtml
 @page "/"
 @using Blazor.Console.Command
 
@@ -148,11 +148,23 @@ Sometimes commands might have a long period. For these kind of commands inject `
 }
 
 ```
+<p align="center">
+    <img src="https://github.com/ardacetinkaya/Blazor.Console/blob/master/screenshots/3.gif" >
+</p>
 
-<img src="https://github.com/ardacetinkaya/Blazor.Console/blob/master/screenshots/3.gif" >
+### Built-in Commands ###
 
+```
+help
+os
+version
+```
 
-<img src="https://github.com/ardacetinkaya/Blazor.Console/blob/master/screenshots/2.png" >
+Also added custom commands are displayed within help command
+
+<p align="center">
+    <img src="https://github.com/ardacetinkaya/Blazor.Console/blob/master/screenshots/2.png" >
+</p>
 
 ### References ###
 - Some commands might be long running tasks, Blazor.Console use some features of a great component for this kind of requirement. Please also check  https://github.com/h3x4d3c1m4l/Blazor.LoadingIndicator if you need a loading indicator for a Blazor app.
