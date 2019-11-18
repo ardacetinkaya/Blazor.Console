@@ -37,7 +37,7 @@
         readonly IRunningCommand _loadingService;
 
         public string Output { get; set; }
-        public string Help { get; }
+        public string Help { get; }="Long running command example.";
 
         public LongCommand(IRunningCommand loadingService)
         {

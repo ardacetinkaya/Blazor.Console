@@ -89,42 +89,4 @@ namespace Blazor.Console
         }
     }
 
-    internal class LongCommand : ILongRunningCommand
-    {
-        readonly IRunningCommand _loadingService;
-
-        public string Output { get; set; }
-        public string Help { get; }
-
-        public LongCommand(IRunningCommand loadingService)
-        {
-            _loadingService = loadingService;
-        }
-
-        public async Task<string> Run(params string[] arguments)
-        {
-            await _loadingService.StartCommandAsync(async (task) =>
-             {
-                 task.Maintext = "Execution is started...";
-                 var i = 0;
-
-                 while (i < 20)
-                 {
-                     await Task.Delay(550);
-                     task.Subtext = "Progress: " + i++;
-                 }
-
-                 task.Maintext = "Execution is completed.";
-             });
-
-            StringBuilder sb = new StringBuilder();
-            sb.Append($"<p>");
-            sb.Append($"<span style='color:white'>This was a long running command</span>");
-            sb.Append($"</p>");
-            Output += sb.ToString();
-
-            return Output;
-        }
-
-    }
 }
