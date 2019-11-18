@@ -1,5 +1,9 @@
 # Blazor.Console
 
+<p align="center">
+    <img src="https://github.com/ardacetinkaya/Blazor.Console/blob/master/screenshots/1.png" />
+</p>
+
 ### What and why... ###
 
 This is a simple console component for ASP.NET Core 3.0 Blazor Server application model. The motivation behind this simple component is to provide simple command-line interface to manage some Web API. With this component it is easy to execute some business related commands.* 
@@ -80,8 +84,6 @@ Adding commands to Blazor.Console is not complicated. First create a command cla
 ```
 
 
-
-<img src="https://github.com/ardacetinkaya/Blazor.Console/blob/master/screenshots/1.png" >
 
 <img src="https://github.com/ardacetinkaya/Blazor.Console/blob/master/screenshots/2.png" >
 
