@@ -5,6 +5,18 @@
     <OutputType>Library</OutputType>
     <IsPackable>true</IsPackable>
     <BlazorLinkOnBuild>false</BlazorLinkOnBuild>
+    <PackageId>Blazor.Console.</PackageId>
+    <Description>A simple component to mock CLI for ASP.NET Core 3.0 Blazor applications to execute some custom commands for an application.
+    Example scenarios;
+    - Clear response cache
+    - Export log files
+    - Change run-time settings
+    - Monitor application resources
+    </Description>
+    <Version>0.1.0</Version>
+    <Authors>Arda Cetinkaya</Authors>
+    <PackageTags>command line;blazor;asp.net core;.net core</PackageTags>
+    <RepositoryUrl>https://github.com/ardacetinkaya/Blazor.Console</RepositoryUrl>
   </PropertyGroup>
   
   <ItemGroup>
