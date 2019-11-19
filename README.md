@@ -1,5 +1,7 @@
 # Blazor.Console
 
+[![Actions Status](https://github.com/ardacetinkaya/Blazor.Console/workflows/Build/badge.svg)](https://github.com/ardacetinkaya/Blazor.Console/actions)
+
 <p align="center">
     <img src="https://github.com/ardacetinkaya/Blazor.Console/blob/master/screenshots/1.png" />
 </p>
