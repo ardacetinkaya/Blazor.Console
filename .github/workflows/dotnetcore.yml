@@ -28,7 +28,7 @@ jobs:
       shell: bash
     - name: Publish nuget
       run: |
-           for f in /Blazor.Console/Blazor.Console/out/*.nupkg
+           for f in ./out/*.nupkg
            do
              curl -vX PUT -u "ardacetinkaya:${{ secrets.BCSecret }}" -F package=@$f https://nuget.pkg.github.com/ardacetinkaya/
            done
