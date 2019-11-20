@@ -8,7 +8,7 @@
     <PackageId>Blazor.Console</PackageId>
     <Description>A simple component to mock command line interface(CLI) for ASP.NET Core 3.0 Blazor applications to execute some custom commands for an application.
     
-  Example scenarios;
+   Example scenarios;
     - Clear response cache
     - Export log files
     - Change run-time settings
