@@ -16,7 +16,7 @@
     </Description>
     <Version>0.1.0</Version>
     <Authors>Arda Cetinkaya</Authors>
-    <PackageTags>command line;blazor;asp.net core;.net core</PackageTags>
+    <PackageTags>commandline;blazor;asp.net core;.net core</PackageTags>
     <RepositoryUrl>https://github.com/ardacetinkaya/Blazor.Console</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
