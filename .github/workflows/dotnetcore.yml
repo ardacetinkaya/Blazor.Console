@@ -17,3 +17,11 @@ jobs:
         dotnet-version: 3.0.100
     - name: Build with dotnet
       run: dotnet build src/Blazor.Console/Blazor.Console.csproj --configuration Release
+    - name: Pack
+      run: dotnet pack src/Blazor.Console/Blazor.Console.csproj -c Release -o out --no-build
+    - name: Install NuGet client
+      uses: warrenbuckley/Setup-Nuget@v1
+    - name: Add private GitHub registry to NuGet
+      run: nuget sources add -name "PCKGS" -Source https://nuget.pkg.github.com/ardacetinkaya/index.json -Username ardacetinkaya -Password ${{ secrets.GITHUB_TOKEN }}
+    - name: Push generated package to GitHub registry
+      run: nuget push .\src\Blazor.Console\out\*.nupkg -Source "PCKGS" -SkipDuplicate
