@@ -30,6 +30,6 @@ jobs:
       run: |
            for f in src/Blazor.Console/bin/Release/*.nupkg
            do
-             curl -vX PUT -u "[user]:${{ secrets.BCSecret }}" -F package=@$f https://nuget.pkg.github.com/ardacetinkaya/
+             curl -vX PUT -u "ardacetinkaya:${{ secrets.BCSecret }}" -F package=@$f https://nuget.pkg.github.com/ardacetinkaya/
            done
       shell: bash
