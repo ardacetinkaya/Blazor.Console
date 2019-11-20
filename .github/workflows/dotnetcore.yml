@@ -17,8 +17,8 @@ jobs:
         dotnet-version: 3.0.100
     - name: Build with dotnet
       run: dotnet build src/Blazor.Console/Blazor.Console.csproj --configuration Release
-  #  - name: Pack
-  #    run: dotnet pack src/Blazor.Console/Blazor.Console.csproj -c Release -o out --no-build
+    - name: Pack
+      run: dotnet pack src/Blazor.Console/Blazor.Console.csproj -c Release -o out --no-build
   #  - name: Install NuGet client
   #    uses: warrenbuckley/Setup-Nuget@v1
   #  - name: Add private GitHub registry to NuGet
@@ -28,7 +28,7 @@ jobs:
       shell: bash
     - name: Publish nuget
       run: |
-           for f in /src/Blazor.Console/bin/Release/netcoreapp3.0/*.nupkg
+           for f in /src/Blazor.Console/out/*.nupkg
            do
              curl -vX PUT -u "ardacetinkaya:${{ secrets.BCSecret }}" -F package=@$f https://nuget.pkg.github.com/ardacetinkaya/
            done
