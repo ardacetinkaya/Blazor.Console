@@ -7,7 +7,9 @@
     <IsPackable>true</IsPackable>
     <BlazorLinkOnBuild>false</BlazorLinkOnBuild>
     <PackageId>Blazor.Console</PackageId>
-    <Description>A simple component to mock command line interface(CLI) for ASP.NET Core 3.x Blazor applications to execute some custom commands for an application.
+    <Description>
+    A simple component to mock command line interface(CLI) for ASP.NET Core 3.x Blazor applications to execute some custom commands for an application. 
+    Within ICommand interface it is possible to implement any custom business related commands for Blazor.Console
     
    Example scenarios;
     - Clear response cache
