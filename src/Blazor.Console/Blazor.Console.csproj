@@ -1,12 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <LangVersion>8.0</LangVersion>
     <OutputType>Library</OutputType>
     <IsPackable>true</IsPackable>
     <BlazorLinkOnBuild>false</BlazorLinkOnBuild>
     <PackageId>Blazor.Console</PackageId>
-    <Description>A simple component to mock command line interface(CLI) for ASP.NET Core 3.0 Blazor applications to execute some custom commands for an application.
+    <Description>A simple component to mock command line interface(CLI) for ASP.NET Core 3.x Blazor applications to execute some custom commands for an application.
     
    Example scenarios;
     - Clear response cache
@@ -14,7 +15,7 @@
     - Change run-time settings
     - Monitor application resources
     </Description>
-    <Version>0.1.0</Version>
+    <Version>1.0.0</Version>
     <Authors>Arda Cetinkaya</Authors>
     <PackageTags>commandline;blazor;asp.net core;.net core</PackageTags>
     <RepositoryUrl>https://github.com/ardacetinkaya/Blazor.Console</RepositoryUrl>
