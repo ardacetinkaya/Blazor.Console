@@ -13,8 +13,8 @@ namespace Blazor.Components
         protected string Running = string.Empty;
         protected Input Command = new Input();
         protected string Disabled { get; set; } = null;
-        public string Name { get; set; }
         protected string Placeholder { get; set; } = "Enter a command, type 'help' for avaliable commands.";
+        [Parameter] public string Name { get; set; }
         [Parameter] public Dictionary<string, ICommand> Commands { get; set; }
         [Inject] internal IServiceProvider ServiceProvider { get; set; }
         [Inject] public IRunningCommand RunningCommand { get; set; }
