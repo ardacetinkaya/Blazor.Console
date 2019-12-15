@@ -16,9 +16,9 @@ jobs:
       with:
         dotnet-version: 3.1.100
     - name: Build with dotnet
-      run: dotnet build src/Blazor.Console/Blazor.Console.csproj --configuration Release
+      run: dotnet build src/Blazor.CommandLine/Blazor.CommandLine.csproj --configuration Release
     - name: Pack
-      run: dotnet pack src/Blazor.Console/Blazor.Console.csproj -c Release -o out --no-build
+      run: dotnet pack src/Blazor.CommandLine/Blazor.CommandLine.csproj -c Release -o out --no-build
   #  - name: Install NuGet client
   #    uses: warrenbuckley/Setup-Nuget@v1
   #  - name: Add private GitHub registry to NuGet
