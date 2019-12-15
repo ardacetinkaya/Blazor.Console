@@ -1,4 +1,4 @@
-# Blazor.Console
+# Blazor.CommandLine (a.k.a Blazor.Console)
 
 [![Actions Status](https://github.com/ardacetinkaya/Blazor.Console/workflows/Build/badge.svg)](https://github.com/ardacetinkaya/Blazor.Console/actions)
 
@@ -26,45 +26,46 @@ Add following extensions to services and application within Startup.cs
 ```cs
 public void ConfigureServices(IServiceCollection services)
 {
-    services.AddConsole();
+    services.AddCommandLine();
 }
 
 public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 {
-    app.UseConsole(env.WebRootPath);
+    app.UseCommandLine(env.WebRootPath);
 }
 ```
 
-Add <BlazorConsole> tag into needed view file(ex: Index.razor)
+Add <BlazorCommandLine> tag into needed view file(ex: Index.razor)
 
 ```html
 @page "/"
 <h1>Hello, world!</h1>
 
-<BlazorConsole />
+<BlazorCommandLine />
 ```
 
 And to have fancy UI add CSS to host file, _HOST.cshtml
 
 ```html
-<link href="Blazor.Console/styles.css" rel="stylesheet" />
+<link href="Blazor.CommandLine/styles.css" rel="stylesheet" />
 ```
 
 ### Commands ###
 
-Adding commands to Blazor.Console is not complicated. First create a command class, implement it with ```ICommand``` interface. Then add the command(s) to the BlazorConsole's Commands as below;
+Adding commands to Blazor.CommandLine is not complicated. First create a command class, implement it with ```ICommand``` interface. Then add the command(s) to the BlazorCommandLine's Commands as below;
 
 ```cshtml
 @page "/"
-@using Blazor.Console.Command
+@using Blazor.CommandLine
+@using Blazor.Components.CommandLine.Command
 
 <h1>Hello, world!</h1>
 
-<BlazorConsole @ref="console" />
+<BlazorCommandLine @ref="console" />
 
 @code
 {
-    BlazorConsole console;
+    BlazorCommandLine console;
 
     protected override Task OnAfterRenderAsync(bool firstRender)
     {
@@ -93,18 +94,19 @@ Sometimes commands might have a long period. For these kind of commands inject `
 
 ```cshtml
 @page "/"
-@using Blazor.Console.Command
+@using Blazor.CommandLine
+@using Blazor.Components.CommandLine.Command
 
 @inject IRunningCommand RunningCommand
 
 
 <h1>Hello, world!</h1>
 
-<BlazorConsole @ref="console" />
+<BlazorCommandLine @ref="console" />
 
 @code
 {
-    BlazorConsole console;
+    BlazorCommandLine console;
 
     protected override Task OnAfterRenderAsync(bool firstRender)
     {
@@ -169,5 +171,5 @@ Also added custom commands are displayed within help command
 </p>
 
 ### References ###
-- Some commands might be long running tasks, Blazor.Console use some features of a great component for this kind of requirement. Please also check  https://github.com/h3x4d3c1m4l/Blazor.LoadingIndicator if you need a loading indicator for a Blazor app.
+- Some commands might be long running tasks, Blazor.CommandLine use some features of a great component for this kind of requirement. Please also check  https://github.com/h3x4d3c1m4l/Blazor.LoadingIndicator if you need a loading indicator for a Blazor app.
 
