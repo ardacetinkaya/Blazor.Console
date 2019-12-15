@@ -1,18 +1,19 @@
-namespace Blazor.Console
+namespace Blazor.Components
 {
-    using Blazor.Console.Command;
+    using Blazor.Components.CommandLine.Command;
     using Microsoft.AspNetCore.Components;
     using Microsoft.AspNetCore.Components.Forms;
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    public class BlazorConsoleComponent : ComponentBase, IDisposable
+    public class BlazorCommandLineComponent : ComponentBase, IDisposable
     {
         protected string Output = string.Empty;
         protected string Running = string.Empty;
         protected Input Command = new Input();
         protected string Disabled { get; set; } = null;
+        public string Name { get; set; }
         protected string Placeholder { get; set; } = "Enter a command, type 'help' for avaliable commands.";
         [Parameter] public Dictionary<string, ICommand> Commands { get; set; }
         [Inject] internal IServiceProvider ServiceProvider { get; set; }
@@ -21,7 +22,7 @@ namespace Blazor.Console
 
         CommandInput cmd;
 
-        public BlazorConsoleComponent()
+        public BlazorCommandLineComponent()
         {
             Commands = new Dictionary<string, ICommand>();
         }

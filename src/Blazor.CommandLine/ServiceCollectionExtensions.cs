@@ -1,18 +1,17 @@
-﻿namespace Blazor.Console
+﻿namespace Blazor.Components
 {
-    using Blazor.Console.Command;
+    using Blazor.Components.CommandLine;
+    using Blazor.Components.CommandLine.Command;
     using Microsoft.Extensions.DependencyInjection;
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
+
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddConsole(this IServiceCollection serviceCollection,Action<ConsoleOptions> options=null)
+        public static IServiceCollection AddCommandLine(this IServiceCollection serviceCollection,Action<CommandLineOptions> options=null)
         {
 
             serviceCollection.AddTransient<IRunningCommand, RunningCommand>();
-            var consoleOptions = new ConsoleOptions();
+            var consoleOptions = new CommandLineOptions();
 
             if (options != null)
             {
@@ -30,8 +29,7 @@
             return serviceCollection;
         }
 
-
-        public class ConsoleOptions
+        public class CommandLineOptions
         {
             public bool UseDefaultServices { get; set; } = true;
         }

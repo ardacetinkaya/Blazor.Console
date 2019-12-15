@@ -1,9 +1,8 @@
-namespace Blazor.Console.Command
+namespace Blazor.Components.CommandLine.Command
 {
     using Microsoft.Extensions.DependencyInjection;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.Extensions.Logging;
 

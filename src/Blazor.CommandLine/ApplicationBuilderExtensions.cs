@@ -1,4 +1,4 @@
-﻿namespace Blazor.Console
+﻿namespace Blazor.Components
 {
     using Microsoft.AspNetCore.Builder;
     using System.IO;
@@ -6,12 +6,12 @@
 
     public static class ApplicationBuilderExtensions
     {
-        public static IApplicationBuilder UseConsole(this IApplicationBuilder applicationBuilder, string webRootPath)
+        public static IApplicationBuilder UseCommandLine(this IApplicationBuilder applicationBuilder, string webRootPath)
         {
             var component = Assembly.GetExecutingAssembly();
             var componentResources = component.GetManifestResourceNames();
 
-            var destinationFolderPath = Path.Combine(webRootPath, "Blazor.Console");
+            var destinationFolderPath = Path.Combine(webRootPath, "Blazor.CommandLine");
             if (!Directory.Exists(destinationFolderPath))
             {
                 Directory.CreateDirectory(destinationFolderPath);

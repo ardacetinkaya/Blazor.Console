@@ -1,6 +1,6 @@
-namespace Blazor.Console
+namespace Blazor.Components.CommandLine
 {
-    using Blazor.Console.Command;
+    using Blazor.Components.CommandLine.Command;
     using System.Collections.Generic;
     using System.Text;
     using System.Threading.Tasks;

@@ -5,9 +5,9 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F815B4B9-589A-4150-99C9-F1C5C38EFDE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor.Console", "src\Blazor.Console\Blazor.Console.csproj", "{1386E031-F7F0-4AE8-8DDB-E63A76387ED4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor.CommandLine", "src\Blazor.CommandLine\Blazor.CommandLine.csproj", "{1386E031-F7F0-4AE8-8DDB-E63A76387ED4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor.Console", "demo\BlazorConsoleDemo.csproj", "{0EA5E9F5-0ED7-4459-BCCD-C155730BEFCE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor.CommandLine", "demo\BlazorConsoleDemo.csproj", "{0EA5E9F5-0ED7-4459-BCCD-C155730BEFCE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

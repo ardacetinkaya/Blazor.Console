@@ -1,16 +1,16 @@
 ﻿@page "/"
-@using Blazor.Console.Command
+@using Blazor.Components.CommandLine.Command
 
 @inject IRunningCommand RunningCommand
 
 
 <h1>Hello, world!</h1>
 
-<BlazorConsole @ref="console" />
+<BlazorCommandLine @ref="console"/>
 
 @code
 {
-    BlazorConsole console;
+    BlazorCommandLine console;
 
     protected override Task OnAfterRenderAsync(bool firstRender)
     {

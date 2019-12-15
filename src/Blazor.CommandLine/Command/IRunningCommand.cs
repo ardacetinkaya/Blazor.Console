@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Blazor.Console.Command
+﻿namespace Blazor.Components.CommandLine.Command
 {
+    using System;
+    using System.Threading.Tasks;
     public interface IRunningCommand
     {
         Task StartCommandAsync(Func<ICommandStatus, Task> action, string maintext = null, string subtext = null);

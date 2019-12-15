@@ -4,6 +4,6 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\Blazor.Console\Blazor.Console.csproj" />
+    <ProjectReference Include="..\src\Blazor.CommandLine\Blazor.CommandLine.csproj" />
   </ItemGroup>
 </Project>
