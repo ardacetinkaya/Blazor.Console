@@ -1,7 +1,6 @@
 ﻿namespace Blazor.Components
 {
     using Blazor.Components.CommandLine;
-    using Blazor.Components.CommandLine.Command;
     using Microsoft.Extensions.DependencyInjection;
     using System;
 
@@ -15,15 +14,7 @@
 
             if (options != null)
             {
-            
                 options.Invoke(consoleOptions);
-            }
-            
-            if (consoleOptions.UseDefaultServices)
-            {
-                serviceCollection.AddTransient<IHelpCommand, HelpCommand>();
-                serviceCollection.AddTransient<IOSCommand, OSCommand>();
-                serviceCollection.AddTransient<IVersionCommand, VersionCommand>();
             }
 
             return serviceCollection;

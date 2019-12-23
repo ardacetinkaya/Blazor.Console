@@ -1,10 +1,13 @@
-namespace Blazor.Components.CommandLine.Command
+namespace Blazor.Components.CommandLine
 {
-    using Microsoft.Extensions.DependencyInjection;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Microsoft.Extensions.Logging;
+    using System.CommandLine;
+    using System.CommandLine.Builder;
+    using System.CommandLine.Invocation;
+    using Blazor.Components.CommandLine.Console;
 
     public class Input
     {
@@ -16,75 +19,45 @@ namespace Blazor.Components.CommandLine.Command
     {
         public string Text { get; set; }
         public DateTime Time { get; } = DateTime.Now;
-
-        public Dictionary<string, ICommand> Commands
-        {
-            get
-            {
-                return _commands;
-            }
-        }
-
         readonly IRunningCommand _runningCommand;
-        readonly Dictionary<string, ICommand> _commands;
         readonly ILogger<CommandInput> _logger;
         readonly IServiceProvider _provider;
 
-        public CommandInput(ILogger<CommandInput> logger, IServiceProvider provider, IRunningCommand runningCommand)
+        Parser _parser;
+        readonly CommandLineBuilder _cmdBuilder;
+        public CommandInput(ILogger<CommandInput> logger, IServiceProvider provider, IRunningCommand runningCommand,string name)
         {
             _provider = provider;
             _runningCommand = runningCommand;
             _logger = logger;
-
-            _commands = new Dictionary<string, ICommand>();
-
+            
+            _cmdBuilder = new CommandLineBuilder(new Command(name));
         }
 
-        public Dictionary<string, ICommand> AddCommands(Dictionary<string, ICommand> commands)
+        public CommandInput AddCommand(Command command)
         {
-            foreach (var command in commands)
+            if (_cmdBuilder != null)
             {
-                if (!Commands.ContainsKey(command.Key))
-                {
-                    Commands.Add(command.Key, command.Value);
-                }
+                _cmdBuilder.AddCommand(command);
             }
 
-            return Commands;
+            return this;
+        }
+
+        public void Init()
+        {
+            if (_cmdBuilder != null)
+            {
+                _parser = _cmdBuilder.UseHelp().UseDefaults().Build();
+            }
         }
 
         public async Task<string> Result()
         {
-            string output = string.Empty;
-            ICommand command = null;
-            string[] arguments = null;
+            var console = new ConsoleOut();
+            await _parser.InvokeAsync(Text, console);
 
-            try
-            {
-                command = (Text switch
-                {
-                    "os" => _ = _provider.GetRequiredService<IOSCommand>(),
-                    "version" => _ = _provider.GetRequiredService<IVersionCommand>(),
-                    "help" => _ = _provider.GetRequiredService<IHelpCommand>(),
-                    _ => _ = _commands[Text]
-                });
-
-                if(command is IHelpCommand)
-                {
-                    (command as IHelpCommand).Commands = Commands;
-                }
-            }
-            catch (System.Exception)
-            {
-                command = new InvalidCommand(Text);
-            }
-            finally
-            {
-                output = await command.Run(arguments);
-            }
-
-
-            return output;
+            return console.Out.ToString();;
         }
 
         public override string ToString()

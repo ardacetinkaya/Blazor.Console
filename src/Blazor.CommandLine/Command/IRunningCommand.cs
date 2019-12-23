@@ -1,4 +1,4 @@
-﻿namespace Blazor.Components.CommandLine.Command
+﻿namespace Blazor.Components.CommandLine
 {
     using System;
     using System.Threading.Tasks;

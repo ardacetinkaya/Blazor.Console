@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/demo/bin/Debug/netcoreapp3.0/BlazorConsoleDemo.dll",
+            "program": "${workspaceFolder}/demo/bin/Debug/netcoreapp3.1/BlazorConsoleDemo.dll",
             "args": [],
             "cwd": "${workspaceFolder}/demo",
             "stopAtEntry": false,

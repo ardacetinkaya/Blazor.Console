@@ -1,6 +1,6 @@
 ﻿@page "/"
 @using Blazor.CommandLine
-@using Blazor.Components.CommandLine.Command
+@using Blazor.Components.CommandLine
 
 @inject IRunningCommand RunningCommand
 
@@ -14,56 +14,44 @@
 
     protected override Task OnAfterRenderAsync(bool firstRender)
     {
-        console.Commands.Add("test", new CommandExample());
-        console.Commands.Add("lng", new LongCommand(RunningCommand));
+        console.Commands.Add(new CommandExample("simple","Description of command"));
+        console.Commands.Add(new LongCommand("lng","Description of long-running command"));
 
         return base.OnAfterRenderAsync(firstRender);
     }
 
-    public class CommandExample : ICommand
+    public class CommandExample : BaseCommand
     {
-        public string Output { get; set; }
-        public string Help { get; } = "Demo - Description of a command";
-        public async Task<string> Run(params string[] arguments)
+        public CommandExample(string name,string description):base(name,description)
         {
-            Output = "Hello from a command";
+            //base.AddOption(new string[]{"-d"},"Description","d");
 
-            return Output;
+            //base.AddArgument("columns","What is it");
+        }
+
+        public override string Execute(List<string> options)
+        {
+            return "This is output of a simple command";
         }
     }
 
-    public class LongCommand : ICommand
+    public class LongCommand : BaseCommand
     {
-        readonly IRunningCommand _loadingService;
-
-        public string Output { get; set; }
-        public string Help { get; }="Demo - Long running command.";
-
-        public LongCommand(IRunningCommand loadingService)
+        public LongCommand(string name, string description):base(name,description,true)
         {
-            _loadingService = loadingService;
+            
         }
 
-        public async Task<string> Run(params string[] arguments)
+        public override async Task<string> ExecuteAsync(List<string> options)
         {
-            await _loadingService.StartCommandAsync(async (task) =>
+            var i = 0;
+            while (i < 10)
             {
-                task.Maintext = "Execution is started...";
-                var i = 0;
-
-                while (i < 10)
-                {
-                    await Task.Delay(550);
-                    task.Subtext = "Progress: " + i++;
-                }
-
-                task.Maintext = "Execution is completed.";
-            });
-
-            Output = "This was a long running command";
-
-            return Output;
+                await Task.Delay(550);
+                i++;
+            }
+            
+            return "This was a long running command";
         }
-
     }
 }
