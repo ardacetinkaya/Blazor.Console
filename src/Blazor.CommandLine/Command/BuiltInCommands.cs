@@ -5,6 +5,7 @@ namespace Blazor.Components.CommandLine
     using System.Threading.Tasks;
     using System.CommandLine.Invocation;
     using System.Threading;
+    using Blazor.Components.CommandLine.Console;
 
     public class VersionCommand : BaseCommand
     {
@@ -12,15 +13,16 @@ namespace Blazor.Components.CommandLine
         {
 
         }
-        public override string Execute(string optionArgument1, string optionArgument2, string optionArgument3, string optionArgument4, List<string> arguments)
+        public override bool Execute(DefaultStreamWriter console,string optionArgument1, string optionArgument2, string optionArgument3, string optionArgument4, List<string> arguments)
         {
             try
             {
-                return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                console.Write(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
+                return true;
             }
             catch (System.Exception)
             {
-                return string.Empty;
+                return false;
             }
         }
     }
@@ -31,15 +33,16 @@ namespace Blazor.Components.CommandLine
         {
 
         }
-        public override string Execute(string optionArgument1, string optionArgument2, string optionArgument3, string optionArgument4, List<string> arguments)
+        public override bool Execute(DefaultStreamWriter console,string optionArgument1, string optionArgument2, string optionArgument3, string optionArgument4, List<string> arguments)
         {
             try
             {
-                return System.Runtime.InteropServices.RuntimeInformation.OSDescription;
+                console.Write(System.Runtime.InteropServices.RuntimeInformation.OSDescription);
+                return true;
             }
             catch (System.Exception)
             {
-                return string.Empty;
+                return false;
             }
         }
     }

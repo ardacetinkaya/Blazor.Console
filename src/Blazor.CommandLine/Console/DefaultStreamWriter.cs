@@ -3,7 +3,7 @@ namespace Blazor.Components.CommandLine.Console
     using System.CommandLine;
     using System.Text;
 
-    internal class DefaultStreamWriter : IStandardStreamWriter
+    public class DefaultStreamWriter : IStandardStreamWriter
     {
         private StringBuilder output = new StringBuilder();
         public DefaultStreamWriter()

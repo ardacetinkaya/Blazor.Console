@@ -1,6 +1,7 @@
 ﻿@page "/"
 @using Blazor.CommandLine
 @using Blazor.Components.CommandLine
+@using Blazor.Components.CommandLine.Console
 
 @inject IRunningCommand RunningCommand
 
@@ -31,9 +32,10 @@
         
         }
 
-        public override string Execute(string option1,string option2,string option3,string option4,List<string> arguments)
+        public override bool Execute(DefaultStreamWriter console,string option1,string option2,string option3,string option4,List<string> arguments)
         {
-            return "This is output of a simple command";
+            console.Write("This is output of a simple command");
+            return true;
         }
     }
 
@@ -44,16 +46,18 @@
             
         }
 
-        public override async Task<string> ExecuteAsync(string option1,string option2,string option3,string optionArgument4,List<string> arguments)
+        public override async Task<bool> ExecuteAsync(DefaultStreamWriter console, string option1,string option2,string option3,string optionArgument4,List<string> arguments)
         {
             var i = 0;
+
             while (i < 10)
             {
                 await Task.Delay(550);
                 i++;
             }
             
-            return "This was a long running command";
+            console.Write("This was a long running command");
+            return true;
         }
     }
 }
