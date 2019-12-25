@@ -1,4 +1,4 @@
-# Blzr.CommandLine (a.k.a Blazor.Console)
+# Blazor.CommandLine (a.k.a Blazor.Console)
 
 [![Actions Status](https://github.com/ardacetinkaya/Blazor.Console/workflows/Build/badge.svg)](https://github.com/ardacetinkaya/Blazor.Console/actions)
 

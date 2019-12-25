@@ -31,7 +31,7 @@
         
         }
 
-        public override string Execute(string optionArgument1,string optionArgument2,string optionArgument3,string optionArgument4,List<string> arguments)
+        public override string Execute(string option1,string option2,string option3,string option4,List<string> arguments)
         {
             return "This is output of a simple command";
         }
@@ -44,7 +44,7 @@
             
         }
 
-        public override async Task<string> ExecuteAsync(string optionArgument1,string optionArgument2,string optionArgument3,string optionArgument4,List<string> arguments)
+        public override async Task<string> ExecuteAsync(string option1,string option2,string option3,string optionArgument4,List<string> arguments)
         {
             var i = 0;
             while (i < 10)

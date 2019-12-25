@@ -34,9 +34,6 @@ namespace Blazor.Components
             RunningCommand.SubscribeToCommandProgressChanged(OnProgressChangedEvent);
 
             cmd = new CommandInput(Logger, ServiceProvider, RunningCommand, "blzr");
-            cmd.AddCommand(new OSCommand());
-            cmd.AddCommand(new VersionCommand());
-
 
 
         }
@@ -44,6 +41,8 @@ namespace Blazor.Components
         {
             if (firstRender)
             {
+                cmd.AddCommand(new OSCommand().Command);
+                cmd.AddCommand(new VersionCommand().Command);
                 foreach (var baseCommand in Commands)
                 {
                     cmd.AddCommand(baseCommand.Command);

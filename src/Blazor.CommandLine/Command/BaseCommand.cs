@@ -24,37 +24,39 @@ namespace Blazor.Components.CommandLine
                 _loadingService = new RunningCommand();
             }
 
+            Handle();
+
         }
 
         private void Handle()
         {
-            _command.Handler = CommandHandler.Create<CancellationToken, List<string>, IConsole, string, string, string, string>(async (token, args, console, oa1, oa2, oa3, oa4) =>
+            _command.Handler = CommandHandler.Create<CancellationToken, List<string>, IConsole, string, string, string, string>(async (token, args, console, o1, o2, o3, o4) =>
                   {
                       if (_loadingService != null)
                       {
                           await _loadingService.StartCommandAsync(async (task) =>
                           {
                               task.Maintext = "Execution is started...";
-                              var result = await ExecuteAsync(oa1, oa2, oa3, oa4, args);
+                              var result = await ExecuteAsync(o1, o2, o3, o4, args);
                               task.Maintext = "Execution is completed.";
                               console.Out.WriteLine(result);
                           });
                       }
                       else
                       {
-                          var output = Execute(oa1, oa2, oa3, oa4, args);
+                          var output = Execute(o1, o2, o3, o4, args);
                           console.Out.WriteLine(output);
                       }
                   });
         }
 
 
-        public virtual async Task<string> ExecuteAsync(string option1Argument, string option2Argument, string option3Argument, string option4Argument, List<string> arguments)
+        public virtual async Task<string> ExecuteAsync(string option1, string option2, string option3, string option4, List<string> arguments)
         {
             await Task.Delay(200);
             return "ExecuteAsync() is not implemented.";
         }
-        public virtual string Execute(string option1Argument, string option2Argument, string option3Argument, string option4Argument, List<string> arguments)
+        public virtual string Execute(string option1, string option2, string option3, string option4, List<string> arguments)
         {
            return "Execute() is not implemented.";
         }
@@ -67,7 +69,7 @@ namespace Blazor.Components.CommandLine
             if (optionCount < 4)
             {
                 optionCount = optionCount == 0 ? 1 : optionCount + 1;
-                var optionName = $"-oa{optionCount.ToString()}";
+                var optionName = $"-o{optionCount.ToString()}";
                 string[] aliases = new string[] { name, optionName };
 
                 _command.AddOption(new Option(aliases)
