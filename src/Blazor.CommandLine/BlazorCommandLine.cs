@@ -1,11 +1,12 @@
 namespace Blazor.Components
 {
-    using Blazor.Components.CommandLine.Command;
+    using Blazor.Components.CommandLine;
     using Microsoft.AspNetCore.Components;
     using Microsoft.AspNetCore.Components.Forms;
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
+    using System.CommandLine;
     using System.Threading.Tasks;
     public class BlazorCommandLineComponent : ComponentBase, IDisposable
     {
@@ -15,7 +16,7 @@ namespace Blazor.Components
         protected string Disabled { get; set; } = null;
         protected string Placeholder { get; set; } = "Enter a command, type 'help' for avaliable commands.";
         [Parameter] public string Name { get; set; }
-        [Parameter] public Dictionary<string, ICommand> Commands { get; set; }
+        [Parameter] public List<BaseCommand> Commands { get; set; }
         [Inject] internal IServiceProvider ServiceProvider { get; set; }
         [Inject] public IRunningCommand RunningCommand { get; set; }
         [Inject] internal ILogger<CommandInput> Logger { get; set; }
@@ -24,7 +25,7 @@ namespace Blazor.Components
 
         public BlazorCommandLineComponent()
         {
-            Commands = new Dictionary<string, ICommand>();
+            Commands = new List<BaseCommand>();
         }
 
         protected override void OnInitialized()
@@ -32,8 +33,23 @@ namespace Blazor.Components
             RunningCommand = new RunningCommand();
             RunningCommand.SubscribeToCommandProgressChanged(OnProgressChangedEvent);
 
-            cmd = new CommandInput(Logger, ServiceProvider, RunningCommand);
+            cmd = new CommandInput(Logger, ServiceProvider, RunningCommand, "blzr");
 
+
+        }
+        protected override void OnAfterRender(bool firstRender)
+        {
+            if (firstRender)
+            {
+                cmd.AddCommand(new OSCommand().Command);
+                cmd.AddCommand(new VersionCommand().Command);
+                foreach (var baseCommand in Commands)
+                {
+                    cmd.AddCommand(baseCommand.Command);
+                }
+
+                cmd.Init();
+            }
         }
 
         private Action<ICommandStatus> OnProgressChangedEvent => new Action<ICommandStatus>((ICommandStatus task) =>
@@ -64,7 +80,6 @@ namespace Blazor.Components
             var input = context.Model as Input;
             if (!string.IsNullOrEmpty(input.Text))
             {
-                cmd.AddCommands(Commands);
                 cmd.Text = input.Text;
                 input.Text = string.Empty;
 

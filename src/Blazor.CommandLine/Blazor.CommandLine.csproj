@@ -18,11 +18,13 @@
     - Monitor application resources
    
    Updates:
-    - Name parameter is added
-    - Namespace changes
+    - Build from scratch to have reliable usage
+    - System.CommandLine is integrated
+    - Some UI fixes
+    - BaseCommand abstraction is added to create custom commands
     
     </Description>
-    <Version>2.0.0</Version>
+    <Version>3.0.0</Version>
     <Authors>Arda Cetinkaya</Authors>
     <PackageTags>commandline;blazor;asp.net core;.net core</PackageTags>
     <RepositoryUrl>https://github.com/ardacetinkaya/Blazor.Console</RepositoryUrl>
@@ -32,5 +34,8 @@
     <EmbeddedResource Include="content\**\*.js" LogicalName="blazor:js:%(RecursiveDir)%(Filename)%(Extension)" />
     <EmbeddedResource Include="content\**\*.css" LogicalName="blazor:css:%(RecursiveDir)%(Filename)%(Extension)" />
     <EmbeddedResource Include="content\**" Exclude="**\*.js;**\*.css" LogicalName="blazor:file:%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.CommandLine.Experimental" Version="0.3.0-alpha.19577.1" />
   </ItemGroup>
 </Project>

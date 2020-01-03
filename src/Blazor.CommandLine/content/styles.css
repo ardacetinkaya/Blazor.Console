@@ -28,7 +28,7 @@ body {
 
     #console #container pre {
         height: auto;
-        margin-bottom: 0px;
+        margin-bottom: -40px;
         color: #757575;
     }
 

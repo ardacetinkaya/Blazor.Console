@@ -16,6 +16,7 @@ Real life scenario examples;
 - Change run-time settings
 - Monitor application resources
 
+This Blazor component is based on ```System.CommandLine.Experimental``` API and reflects standart command-line features to be more reliable.
 
 ### Usage ###
 
@@ -39,9 +40,13 @@ Add <BlazorCommandLine> tag into needed view file(ex: Index.razor)
 
 ```html
 @page "/"
+@using Blazor.CommandLine
+@using Blazor.Components.CommandLine
+@using Blazor.Components.CommandLine.Console
+
 <h1>Hello, world!</h1>
 
-<BlazorCommandLine />
+<BlazorCommandLine @ref="console" Name="Some Demo App v1.0.0"/>
 ```
 
 And to have fancy UI add CSS to host file, _HOST.cshtml
@@ -50,56 +55,26 @@ And to have fancy UI add CSS to host file, _HOST.cshtml
 <link href="Blazor.CommandLine/styles.css" rel="stylesheet" />
 ```
 
+<p align="center">
+    <img src="https://github.com/ardacetinkaya/Blazor.Console/blob/master/screenshots/2.png" />
+</p>
+
 ### Commands ###
 
-Adding commands to Blazor.CommandLine is not complicated. First create a command class, implement it with ```ICommand``` interface. Then add the command(s) to the BlazorCommandLine's Commands as below;
+Adding commands to Blazor.CommandLine is not complicated. First create a command class, implement it with ```BaseCommand``` . Then add the command(s) to the BlazorCommandLine's Commands as below;
+
+Within custom command's constructor it is easy to add options to the command. Also command arguments can be enabled for the command as ```System.CommandLine.Experimental```
+
+To implement the command's main execution just override Execute() or ExecuteAsync() method. 
 
 ```cshtml
 @page "/"
 @using Blazor.CommandLine
-@using Blazor.Components.CommandLine.Command
-
-<h1>Hello, world!</h1>
-
-<BlazorCommandLine @ref="console" />
-
-@code
-{
-    BlazorCommandLine console;
-
-    protected override Task OnAfterRenderAsync(bool firstRender)
-    {
-        console.Commands.Add("test", new CommandExample());
-        
-        return base.OnAfterRenderAsync(firstRender);
-    }
-
-    public class CommandExample : ICommand
-    {
-        public string Output { get; set; }
-        public string Help { get; } = "Description of a Command Example";
-        public async Task<string> Run(params string[] arguments)
-        {
-            Output = "Hello from a command";
-
-            return Output;
-        }
-    }
-}
-```
-
-### Long running Commands ###
-
-Sometimes commands might have a long period. For these kind of commands inject ```IRunningCommand``` 
-
-```cshtml
-@page "/"
-@using Blazor.CommandLine
-@using Blazor.Components.CommandLine.Command
+@using Blazor.Components.CommandLine
+@using Blazor.Components.CommandLine.Console
 
 @inject IRunningCommand RunningCommand
 
-
 <h1>Hello, world!</h1>
 
 <BlazorCommandLine @ref="console" />
@@ -110,64 +85,56 @@ Sometimes commands might have a long period. For these kind of commands inject `
 
     protected override Task OnAfterRenderAsync(bool firstRender)
     {
-        console.Commands.Add("lng", new LongCommand(RunningCommand));
-        
+        console.Commands.Add(new CommandExample("simple","Description of command"));
+        console.Commands.Add(new LongCommand("lng","Description of long-running command"));
+
         return base.OnAfterRenderAsync(firstRender);
     }
 
-    public class LongCommand : ICommand
+    public class CommandExample : BaseCommand
     {
-        readonly IRunningCommand _loadingService;
-
-        public string Output { get; set; }
-        public string Help { get; };
-
-        public LongCommand(IRunningCommand loadingService)
+        public CommandExample(string name,string description):base(name,description)
         {
-            _loadingService = loadingService;
+            base.AddOption("-t","Description of option -t");
+            base.AddOption("-ar","Description of option -ar");
+
+            base.UseArguments($"Some extra arguments for {name}");
+        
         }
 
-        public async Task<string> Run(params string[] arguments)
+        public override bool Execute(DefaultStreamWriter console,string option1,string option2,string option3,string option4,List<string> arguments)
         {
-            await _loadingService.StartCommandAsync(async (task) =>
-             {
-                 task.Maintext = "Execution is started...";
-                 var i = 0;
+            console.Write("This is output of a simple command");
+            return true;
+        }
+    }
 
-                 while (i < 10)
-                 {
-                     await Task.Delay(550);
-                     task.Subtext = "Progress: " + i++;
-                 }
-
-                 task.Maintext = "Execution is completed.";
-             });
-
-            Output = "This was a long running command";
-
-            return Output;
+    public class LongCommand : BaseCommand
+    {
+        public LongCommand(string name, string description):base(name,description,true)
+        {
+            
         }
 
+        public override async Task<bool> ExecuteAsync(DefaultStreamWriter console, string option1,string option2,string option3,string optionArgument4,List<string> arguments)
+        {
+            var i = 0;
+
+            while (i < 10)
+            {
+                await Task.Delay(550);
+                i++;
+            }
+            
+            console.Write("This was a long running command");
+            return true;
+        }
     }
 }
-
 ```
-<p align="center">
-    <img src="https://github.com/ardacetinkaya/Blazor.Console/blob/master/screenshots/3.gif" >
-</p>
-
-### Built-in Commands ###
-
-```
-help
-os
-version
-```
-
-Also added custom commands are displayed within help command
 
 <p align="center">
-    <img src="https://github.com/ardacetinkaya/Blazor.Console/blob/master/screenshots/2.png" >
+    <img src="https://github.com/ardacetinkaya/Blazor.Console/blob/master/screenshots/3.png" />
 </p>
 
 ### References ###
