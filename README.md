@@ -40,12 +40,24 @@ Add <BlazorCommandLine> tag into needed view file(ex: Index.razor)
 
 ```html
 @page "/"
+@using Blazor.CommandLine
+@using Blazor.Components.CommandLine
+@using Blazor.Components.CommandLine.Console
+
 <h1>Hello, world!</h1>
 
 <BlazorCommandLine @ref="console" Name="Some Demo App v1.0.0"/>
 ```
 
+And to have fancy UI add CSS to host file, _HOST.cshtml
 
+```html
+<link href="Blazor.CommandLine/styles.css" rel="stylesheet" />
+```
+
+<p align="center">
+    <img src="https://github.com/ardacetinkaya/Blazor.Console/blob/master/screenshots/2.png" />
+</p>
 
 ### Commands ###
 
@@ -60,6 +72,8 @@ To implement the command's main execution just override Execute() or ExecuteAsyn
 @using Blazor.CommandLine
 @using Blazor.Components.CommandLine
 @using Blazor.Components.CommandLine.Console
+
+@inject IRunningCommand RunningCommand
 
 <h1>Hello, world!</h1>
 
@@ -118,6 +132,10 @@ To implement the command's main execution just override Execute() or ExecuteAsyn
     }
 }
 ```
+
+<p align="center">
+    <img src="https://github.com/ardacetinkaya/Blazor.Console/blob/master/screenshots/3.png" />
+</p>
 
 ### References ###
 - Some commands might be long running tasks, Blazor.CommandLine use some features of a great component for this kind of requirement. Please also check  https://github.com/h3x4d3c1m4l/Blazor.LoadingIndicator if you need a loading indicator for a Blazor app.
