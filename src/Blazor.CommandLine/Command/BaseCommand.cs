@@ -7,6 +7,7 @@ namespace Blazor.Components.CommandLine
     using System.Collections.Generic;
     using System.Linq;
     using Blazor.Components.CommandLine.Console;
+    using System.CommandLine.IO;
 
     public abstract class BaseCommand
     {

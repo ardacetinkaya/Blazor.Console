@@ -1,13 +1,12 @@
 namespace Blazor.Components.CommandLine
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
+    using Blazor.Components.CommandLine.Console;
     using Microsoft.Extensions.Logging;
+    using System;
     using System.CommandLine;
     using System.CommandLine.Builder;
-    using System.CommandLine.Invocation;
-    using Blazor.Components.CommandLine.Console;
+    using System.CommandLine.Parsing;
+    using System.Threading.Tasks;
 
     public class Input
     {

@@ -1,6 +1,7 @@
 namespace Blazor.Components.CommandLine.Console
 {
     using System.CommandLine;
+    using System.CommandLine.IO;
 
     public class ConsoleOut : IConsole
     {
