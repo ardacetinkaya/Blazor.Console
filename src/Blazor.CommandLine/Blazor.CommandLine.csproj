@@ -18,13 +18,10 @@
     - Monitor application resources
    
    Updates:
-    - Build from scratch to have reliable usage
-    - System.CommandLine is integrated
-    - Some UI fixes
-    - BaseCommand abstraction is added to create custom commands
+    - System.CommandLine 2.0.0-beta1.20071.2 is integrated
     
     </Description>
-    <Version>3.0.0</Version>
+    <Version>3.1.0</Version>
     <Authors>Arda Cetinkaya</Authors>
     <PackageTags>commandline;blazor;asp.net core;.net core</PackageTags>
     <RepositoryUrl>https://github.com/ardacetinkaya/Blazor.Console</RepositoryUrl>
