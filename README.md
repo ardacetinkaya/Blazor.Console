@@ -16,7 +16,7 @@ Real life scenario examples;
 - Change run-time settings
 - Monitor application resources
 
-This Blazor component is based on ```System.CommandLine.Experimental``` API and reflects standart command-line features to be more reliable.
+This Blazor component is based on ```System.CommandLine``` API and reflects standart command-line features to be more reliable.
 
 ### Usage ###
 
@@ -63,7 +63,7 @@ And to have fancy UI add CSS to host file, _HOST.cshtml
 
 Adding commands to Blazor.CommandLine is not complicated. First create a command class, implement it with ```BaseCommand``` . Then add the command(s) to the BlazorCommandLine's Commands as below;
 
-Within custom command's constructor it is easy to add options to the command. Also command arguments can be enabled for the command as ```System.CommandLine.Experimental```
+Within custom command's constructor it is easy to add options to the command. Also command arguments can be enabled for the command as ```System.CommandLine```
 
 To implement the command's main execution just override Execute() or ExecuteAsync() method. 
 
