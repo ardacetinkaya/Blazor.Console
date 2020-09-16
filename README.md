@@ -1,7 +1,7 @@
 # Blazor.CommandLine (a.k.a Blazor.Console)
 
 [![Actions Status](https://github.com/ardacetinkaya/Blazor.Console/workflows/Build/badge.svg)](https://github.com/ardacetinkaya/Blazor.Console/actions)
-
+[![NuGet version (Blzr.Components.CommandLine)](https://img.shields.io/nuget/v/Blzr.Components.CommandLine.svg)](https://www.nuget.org/packages/Blzr.Components.CommandLine/)
 <p align="center">
     <img src="https://github.com/ardacetinkaya/Blazor.Console/blob/master/screenshots/1.png" />
 </p>
