@@ -23,7 +23,7 @@ body {
 
 #console #container {
     padding: .1em 1.5em 1em 1em;
-    margin-top: -40px;
+    margin-top: 20px;
 }
 
     #console #container pre {
