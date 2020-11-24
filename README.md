@@ -2,6 +2,8 @@
 
 [![Actions Status](https://github.com/ardacetinkaya/Blazor.Console/workflows/Build/badge.svg)](https://github.com/ardacetinkaya/Blazor.Console/actions)
 [![NuGet version (Blzr.Components.CommandLine)](https://img.shields.io/nuget/v/Blzr.Components.CommandLine.svg)](https://www.nuget.org/packages/Blzr.Components.CommandLine/)
+
+Development: ![Build](https://github.com/ardacetinkaya/Blazor.Console/workflows/Build/badge.svg?branch=development)
 <p align="center">
     <img src="https://github.com/ardacetinkaya/Blazor.Console/blob/master/screenshots/1.png" />
 </p>
