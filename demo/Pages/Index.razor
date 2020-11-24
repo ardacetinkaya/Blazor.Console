@@ -7,7 +7,7 @@
 
 <h1>Hello, world!</h1>
 
-<BlazorCommandLine @ref="console" Name="Some Demo App v1.0.0"/>
+<BlazorCommandLine @ref="console" Name="Some Demo App v1.0.0" ShowDate="true" />
 
 @code
 {
@@ -27,9 +27,6 @@
         {
             base.AddOption("-t","Description of option -t");
             base.AddOption("-ar","Description of option -ar");
-
-            base.UseArguments($"Some extra arguments for {name}");
-        
         }
 
         public override bool Execute(DefaultStreamWriter console,string option1,string option2,string option3,string option4,List<string> arguments)
