@@ -9,7 +9,9 @@
     <div id="console">
         <div id="header">
             <h4>@Name</h4>
-            <h5>> @System.DateTimeOffset.Now.ToString("dd MMMM yyyy HH:mm:ss \"GMT\"zzz", System.Globalization.CultureInfo.InvariantCulture)</h5>
+            @if(ShowDate){
+                <h5>> @System.DateTimeOffset.Now.ToString("dd MMMM yyyy HH:mm:ss \"GMT\"zzz", System.Globalization.CultureInfo.InvariantCulture)</h5>
+            }
             @if(!string.IsNullOrEmpty(Description)){
                 if(Description=="##VERSION##")
                 {
