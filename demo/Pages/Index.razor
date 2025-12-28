@@ -7,16 +7,16 @@
 
 <h1>Hello, world!</h1>
 
-<BlazorCommandLine @ref="console" Name="Some Demo App v1.0.0" ShowDate="true" />
+<BlazorCommandLine @ref="_console" Name="Some Demo App v1.0.0" ShowDate="true" />
 
 @code
 {
-    BlazorCommandLine console;
+    BlazorCommandLine _console;
 
     protected override Task OnAfterRenderAsync(bool firstRender)
     {
-        console.Commands.Add(new CommandExample("simple","Description of command"));
-        console.Commands.Add(new LongCommand("lng","Description of long-running command"));
+        _console.Commands.Add(new CommandExample("simple","Description of command"));
+        _console.Commands.Add(new LongCommand("lng","Description of long-running command"));
 
         return base.OnAfterRenderAsync(firstRender);
     }
@@ -36,13 +36,8 @@
         }
     }
 
-    public class LongCommand : BaseCommand
+    public class LongCommand(string name, string description) : BaseCommand(name, description, true)
     {
-        public LongCommand(string name, string description):base(name,description,true)
-        {
-            
-        }
-
         protected override async Task<bool> ExecuteAsync(DefaultStreamWriter console, string option1,string option2,string option3,string optionArgument4,List<string> arguments)
         {
             var i = 0;

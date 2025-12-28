@@ -8,18 +8,18 @@ namespace Blazor.Components.CommandLine;
 
 public class RunningCommand : IRunningCommand
 {
-    private static ConcurrentDictionary<string, TaskContext> _tasks = new ConcurrentDictionary<string, TaskContext>();
+    private static readonly ConcurrentDictionary<string, TaskContext> Tasks = new ConcurrentDictionary<string, TaskContext>();
 
     public async Task StartCommandAsync(Func<ICommandStatus, Task> action, string maintext = null, string subtext = null)
     {
         var task = new RunningTask("console", maintext, subtext);
-        if (!_tasks.TryGetValue("console", out TaskContext c))
+        if (!Tasks.TryGetValue("console", out TaskContext c))
         {
             c = new TaskContext
             {
                 Tasks = { task }
             };
-            _tasks.TryAdd("console", c);
+            Tasks.TryAdd("console", c);
         }
         else
         {
@@ -43,10 +43,10 @@ public class RunningCommand : IRunningCommand
 
     public void SubscribeToCommandProgressChanged(Action<ICommandStatus> action)
     {
-        if (!_tasks.TryGetValue("console", out TaskContext c))
+        if (!Tasks.TryGetValue("console", out TaskContext c))
         {
             c = new TaskContext();
-            _tasks.TryAdd("console", c);
+            Tasks.TryAdd("console", c);
         }
 
         c.Changed += action;
@@ -55,7 +55,7 @@ public class RunningCommand : IRunningCommand
 
     public void UnsubscribeFromCommandProgressChanged(Action<ICommandStatus> action)
     {
-        if (_tasks.TryGetValue("console", out TaskContext c))
+        if (Tasks.TryGetValue("console", out TaskContext c))
         {
             c.Changed -= action;
         }
@@ -63,7 +63,7 @@ public class RunningCommand : IRunningCommand
 
     private class TaskContext
     {
-        public List<RunningTask> Tasks = new List<RunningTask>();
+        public readonly List<RunningTask> Tasks = [];
         public event Action<ICommandStatus> Changed;
 
         public void FireChanged()
@@ -72,28 +72,19 @@ public class RunningCommand : IRunningCommand
         }
     }
 
-    private class RunningTask : ICommandStatus
+    private class RunningTask(string context, string maintext, string subtext) : ICommandStatus
     {
-        private string _context;
-
         private double? _progressValue;
 
         private double? _progressMax;
 
-        private string _maintext;
+        private string _maintext = maintext;
 
-        private string _subtext;
+        private string _subtext = subtext;
 
         private Exception _exception;
 
         private TaskStatus _status;
-
-        public RunningTask(string context, string maintext, string subtext)
-        {
-            _context = context;
-            _maintext = maintext;
-            _subtext = subtext;
-        }
 
         public void DismissException()
         {
@@ -107,7 +98,7 @@ public class RunningCommand : IRunningCommand
             set
             {
                 _progressValue = value;
-                var c = _tasks[_context];
+                var c = Tasks[context];
                 c.FireChanged();
             }
         }
@@ -118,7 +109,7 @@ public class RunningCommand : IRunningCommand
             set
             {
                 _progressMax = value;
-                var c = _tasks[_context];
+                var c = Tasks[context];
                 c.FireChanged();
             }
         }
@@ -129,7 +120,7 @@ public class RunningCommand : IRunningCommand
             set
             {
                 _maintext = value;
-                var c = _tasks[_context];
+                var c = Tasks[context];
                 c.FireChanged();
             }
         }
@@ -140,7 +131,7 @@ public class RunningCommand : IRunningCommand
             set
             {
                 _subtext = value;
-                var c = _tasks[_context];
+                var c = Tasks[context];
                 c.FireChanged();
             }
         }
@@ -151,7 +142,7 @@ public class RunningCommand : IRunningCommand
             set
             {
                 _exception = value;
-                var c = _tasks[_context];
+                var c = Tasks[context];
                 c.FireChanged();
             }
         }
@@ -162,14 +153,14 @@ public class RunningCommand : IRunningCommand
             set
             {
                 _status = value;
-                var c = _tasks[_context];
+                var c = Tasks[context];
                 c.FireChanged();
             }
         }
 
         public void Dispose()
         {
-            var c = _tasks[_context];
+            var c = Tasks[context];
             lock (c)
             {
                 c.Tasks.Remove(this);

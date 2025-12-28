@@ -14,31 +14,24 @@ public class Input
     public DateTime Time { get; } = DateTime.Now;
 }
 
-internal class CommandInput
+internal class CommandInput(
+    ILogger<CommandInput> logger,
+    IServiceProvider provider,
+    IRunningCommand runningCommand,
+    string name)
 {
     public string Text { get; set; }
     public DateTime Time { get; } = DateTime.Now;
-    readonly IRunningCommand _runningCommand;
-    readonly ILogger<CommandInput> _logger;
-    readonly IServiceProvider _provider;
+    readonly IRunningCommand _runningCommand = runningCommand;
+    readonly ILogger<CommandInput> _logger = logger;
+    readonly IServiceProvider _provider = provider;
 
-    Parser _parser;
-    readonly CommandLineBuilder _cmdBuilder;
-    public CommandInput(ILogger<CommandInput> logger, IServiceProvider provider, IRunningCommand runningCommand,string name)
-    {
-        _provider = provider;
-        _runningCommand = runningCommand;
-        _logger = logger;
-        
-        _cmdBuilder = new CommandLineBuilder(new Command(name));
-    }
+    private Parser _parser;
+    private readonly CommandLineBuilder _cmdBuilder = new(new Command(name));
 
     public CommandInput AddCommand(Command command)
     {
-        if (_cmdBuilder != null)
-        {
-            _cmdBuilder.Command.AddCommand(command);
-        }
+        _cmdBuilder?.Command.AddCommand(command);
 
         return this;
     }

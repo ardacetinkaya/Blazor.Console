@@ -4,13 +4,8 @@ using Blazor.Components.CommandLine.Console;
 
 namespace Blazor.Components.CommandLine;
 
-public class VersionCommand : BaseCommand
+public class VersionCommand() : BaseCommand("version", "Displays Blazor.Commandline version.")
 {
-    public VersionCommand() : base("version", "Displays Blazor.Commandline version.")
-    {
-
-    }
-
     protected override bool Execute(DefaultStreamWriter console,string optionArgument1, string optionArgument2, string optionArgument3, string optionArgument4, List<string> arguments)
     {
         try
@@ -25,14 +20,8 @@ public class VersionCommand : BaseCommand
     }
 }
 
-public class OSCommand : BaseCommand
+public class OsCommand() : BaseCommand("os", "Displays the current operating system.")
 {
-    public OSCommand() : base("os", "Displays the current opearting system.")
-    {
-
-    }
-
-
     protected override Task<bool> ExecuteAsync(DefaultStreamWriter console, string option1, string option2, string option3, string option4, List<string> arguments)
     {
         return base.ExecuteAsync(console, option1, option2, option3, option4, arguments);

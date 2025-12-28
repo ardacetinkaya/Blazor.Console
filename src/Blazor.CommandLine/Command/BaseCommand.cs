@@ -37,10 +37,10 @@ public abstract class BaseCommand
 
             var console = context.Console;
 
-            string o1 = GetOptionValue(context, "-o1");
-            string o2 = GetOptionValue(context, "-o2");
-            string o3 = GetOptionValue(context, "-o3");
-            string o4 = GetOptionValue(context, "-o4");
+            var o1 = GetOptionValue(context, "-o1");
+            var o2 = GetOptionValue(context, "-o2");
+            var o3 = GetOptionValue(context, "-o3");
+            var o4 = GetOptionValue(context, "-o4");
 
             if (_loadingService != null)
             {

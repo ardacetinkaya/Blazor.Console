@@ -38,7 +38,7 @@ public class BlazorCommandLineComponent : ComponentBase, IDisposable
     {
         if (firstRender)
         {
-            _cmd.AddCommand(new OSCommand().Command);
+            _cmd.AddCommand(new OsCommand().Command);
             _cmd.AddCommand(new VersionCommand().Command);
             foreach (var baseCommand in Commands)
             {

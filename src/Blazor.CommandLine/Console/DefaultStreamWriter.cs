@@ -5,18 +5,18 @@ namespace Blazor.Components.CommandLine.Console;
 
 public class DefaultStreamWriter : IStandardStreamWriter
 {
-    private StringBuilder output = new StringBuilder();
+    private readonly StringBuilder _output = new StringBuilder();
     public DefaultStreamWriter()
     {
 
     }
     public void Write(string value)
     {
-        output.Append(value);
+        _output.Append(value);
     }
 
     public override string ToString()
     {
-        return output.ToString();
+        return _output.ToString();
     }
 }
