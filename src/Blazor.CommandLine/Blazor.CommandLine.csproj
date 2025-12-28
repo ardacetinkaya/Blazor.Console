@@ -18,6 +18,7 @@
    
    Updates:
     - .NET 10.0 upgrade
+    - Some refactoring and improvements
     
     </Description>
     <Version>10.0.0</Version>
