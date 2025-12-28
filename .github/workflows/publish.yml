@@ -1,4 +1,4 @@
-name: Build
+name: Publish
 
 on:
   push:
@@ -6,32 +6,28 @@ on:
     - main
     paths:
     - 'src/**'
+    - '.github/workflows/publish.yml'
 jobs:
-  build:
-  
+  build-and-publish:
+    permissions:
+      id-token: write  # enable GitHub OIDC token issuance for this job
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v1
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 10.0.101
     - name: Build with dotnet
       run: dotnet build src/Blazor.CommandLine/Blazor.CommandLine.csproj --configuration Release
     - name: Pack
       run: dotnet pack src/Blazor.CommandLine/Blazor.CommandLine.csproj -c Release -o out --no-build
-  #  - name: Install NuGet client
-  #    uses: warrenbuckley/Setup-Nuget@v1
-  #  - name: Add private GitHub registry to NuGet
-  #    run: nuget sources add -name "PCKGS" -Source https://nuget.pkg.github.com/ardacetinkaya/index.json -Username ardacetinkaya -Password ${{ secrets.GITHUB_TOKEN }}
-  #  - name: Push generated package to GitHub registry
-  #    run: nuget push .\out\*.nupkg -Source "PCKGS" -SkipDuplicate
-      shell: bash
-    - name: Publish nuget
-      run: |
-           for f in ./out/*.nupkg
-           do
-             curl -vX PUT -u "ardacetinkaya:${{ secrets.BCSecret }}" -F package=@$f https://nuget.pkg.github.com/ardacetinkaya/
-           done
-      shell: bash
+
+    - name: NuGet login (OIDC → temp API key)
+      uses: NuGet/login@v1
+      id: login
+      with:
+        user: ${{ secrets.NUGET_USER }}
+    # Push the package
+    - name: NuGet push
+      run: dotnet nuget push artifacts/my-sdk.nupkg --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
