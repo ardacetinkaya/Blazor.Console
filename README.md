@@ -5,7 +5,7 @@
 
 Development: ![Build](https://github.com/ardacetinkaya/Blazor.Console/workflows/Build/badge.svg?branch=development)
 <p align="center">
-    <img src="https://github.com/ardacetinkaya/Blazor.Console/blob/master/screenshots/1.png" />
+    <img src="https://github.com/ardacetinkaya/Blazor.Console/blob/main/screenshots/1.png" />
 </p>
 
 ### What and why... ###
@@ -58,7 +58,7 @@ And to have fancy UI add CSS to host file, _HOST.cshtml
 ```
 
 <p align="center">
-    <img src="https://github.com/ardacetinkaya/Blazor.Console/blob/master/screenshots/2.png" />
+    <img src="https://github.com/ardacetinkaya/Blazor.Console/blob/main/screenshots/2.png" />
 </p>
 
 ### Commands ###
@@ -136,7 +136,7 @@ To implement the command's main execution just override Execute() or ExecuteAsyn
 ```
 
 <p align="center">
-    <img src="https://github.com/ardacetinkaya/Blazor.Console/blob/master/screenshots/3.png" />
+    <img src="https://github.com/ardacetinkaya/Blazor.Console/blob/main/screenshots/3.png" />
 </p>
 
 ### References ###

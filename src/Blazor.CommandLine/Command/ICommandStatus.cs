@@ -1,19 +1,18 @@
-﻿namespace Blazor.Components.CommandLine
+﻿using System;
+
+namespace Blazor.Components.CommandLine;
+
+public interface ICommandStatus : IDisposable
 {
-    using System;
+    double? ProgressValue { get; set; }
 
-    public interface ICommandStatus : IDisposable
-    {
-        double? ProgressValue { get; set; }
+    double? ProgressMax { get; set; }
 
-        double? ProgressMax { get; set; }
+    string Maintext { get; set; }
 
-        string Maintext { get; set; }
+    string Subtext { get; set; }
 
-        string Subtext { get; set; }
+    Exception Exception { get; set; }
 
-        Exception Exception { get; set; }
-
-        void DismissException();
-    }
+    void DismissException();
 }

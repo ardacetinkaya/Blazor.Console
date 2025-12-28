@@ -1,67 +1,56 @@
-namespace Blazor.Components.CommandLine
+using Blazor.Components.CommandLine.Console;
+using Microsoft.Extensions.Logging;
+using System;
+using System.CommandLine;
+using System.CommandLine.Builder;
+using System.CommandLine.Parsing;
+using System.Threading.Tasks;
+
+namespace Blazor.Components.CommandLine;
+
+public class Input
 {
-    using Blazor.Components.CommandLine.Console;
-    using Microsoft.Extensions.Logging;
-    using System;
-    using System.CommandLine;
-    using System.CommandLine.Builder;
-    using System.CommandLine.Parsing;
-    using System.Threading.Tasks;
+    public string Text { get; set; }
+    public DateTime Time { get; } = DateTime.Now;
+}
 
-    public class Input
+internal class CommandInput(
+    ILogger<CommandInput> logger,
+    IServiceProvider provider,
+    IRunningCommand runningCommand,
+    string name)
+{
+    public string Text { get; set; }
+    public DateTime Time { get; } = DateTime.Now;
+    readonly IRunningCommand _runningCommand = runningCommand;
+    readonly ILogger<CommandInput> _logger = logger;
+    readonly IServiceProvider _provider = provider;
+
+    private Parser _parser;
+    private readonly CommandLineBuilder _cmdBuilder = new(new Command(name));
+
+    public CommandInput AddCommand(Command command)
     {
-        public string Text { get; set; }
-        public DateTime Time { get; } = DateTime.Now;
+        _cmdBuilder?.Command.AddCommand(command);
+
+        return this;
     }
 
-    internal class CommandInput
+    public void Init()
     {
-        public string Text { get; set; }
-        public DateTime Time { get; } = DateTime.Now;
-        readonly IRunningCommand _runningCommand;
-        readonly ILogger<CommandInput> _logger;
-        readonly IServiceProvider _provider;
-
-        Parser _parser;
-        readonly CommandLineBuilder _cmdBuilder;
-        public CommandInput(ILogger<CommandInput> logger, IServiceProvider provider, IRunningCommand runningCommand,string name)
+        if (_cmdBuilder != null)
         {
-            _provider = provider;
-            _runningCommand = runningCommand;
-            _logger = logger;
-            
-            _cmdBuilder = new CommandLineBuilder(new Command(name));
-        }
-
-        public CommandInput AddCommand(Command command)
-        {
-            if (_cmdBuilder != null)
-            {
-                _cmdBuilder.AddCommand(command);
-            }
-
-            return this;
-        }
-
-        public void Init()
-        {
-            if (_cmdBuilder != null)
-            {
-                _parser = _cmdBuilder.UseHelp().UseDefaults().Build();
-            }
-        }
-
-        public async Task<string> Result()
-        {
-            var console = new ConsoleOut();
-            await _parser.InvokeAsync(Text, console);
-
-            return console.Out.ToString();;
-        }
-
-        public override string ToString()
-        {
-            return $"<span class='header'>{Time.ToString("HH:mm")} > </span><span class='command'>{Text}{Environment.NewLine}</span>";
+            _parser = _cmdBuilder.UseHelp().UseDefaults().Build();
         }
     }
+
+    public async Task<string> Result()
+    {
+        var console = new ConsoleOut();
+        await _parser.InvokeAsync(Text, console);
+
+        return console.Out.ToString();;
+    }
+
+    public override string ToString() => $"<span class='header'>{DateTime.Now:HH:mm:ss.fff} > </span><span class='command'>{Text}{Environment.NewLine}</span>";
 }

@@ -1,9 +1,9 @@
-﻿namespace Blazor.Components
-{
-    using Blazor.Components.CommandLine;
-    using Microsoft.Extensions.DependencyInjection;
-    using System;
+﻿using Blazor.Components.CommandLine;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 
+namespace Blazor.Components
+{
     public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddCommandLine(this IServiceCollection serviceCollection,Action<CommandLineOptions> options=null)
@@ -12,10 +12,7 @@
             serviceCollection.AddTransient<IRunningCommand, RunningCommand>();
             var consoleOptions = new CommandLineOptions();
 
-            if (options != null)
-            {
-                options.Invoke(consoleOptions);
-            }
+            options?.Invoke(consoleOptions);
 
             return serviceCollection;
         }

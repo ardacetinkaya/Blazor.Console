@@ -1,14 +1,10 @@
 @import "compass/css3";
 @import url(https://fonts.googleapis.com/css?family=Cousine);
 
-html,
-body {
+#console{
     width: 100%;
     height: 100%;
     margin: 0;
-}
-
-body {
     font-size: 11pt;
     font-family: Inconsolata, monospace;
     color: white;
@@ -33,7 +29,6 @@ body {
     }
 
         #console #container pre .header {
-            font-weight: bold;
             color: #96b38a;
         }
 
@@ -42,8 +37,7 @@ body {
         }
 
     #console #container p {
-        margin: 0px;
-        margin-bottom:10px;
+        margin: 0;
     }
 
     #console #container .prgs {
@@ -52,6 +46,7 @@ body {
 
         #console #container .prgs .main {
             display: block !important;
+            margin-top: -40px;
         }
 
         #console #container .prgs .subtext {
