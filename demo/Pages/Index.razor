@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using System.Threading
 @using Blazor.CommandLine
 @using Blazor.Components.CommandLine
 @using Blazor.Components.CommandLine.Console
@@ -7,7 +8,7 @@
 
 <h1>Hello, world!</h1>
 
-<BlazorCommandLine @ref="_console" Name="Some Demo App v1.0.0" ShowDate="true" />
+<BlazorCommandLine @ref="_console" Name="Some Demo App v1.0.0" ShowDate="true"/>
 
 @code
 {
@@ -15,39 +16,43 @@
 
     protected override Task OnAfterRenderAsync(bool firstRender)
     {
-        _console.Commands.Add(new CommandExample("simple","Description of command"));
-        _console.Commands.Add(new LongCommand("lng","Description of long-running command"));
+        _console.Commands.Add(new CommandExample("simple", "Description of command"));
+        _console.Commands.Add(new LongCommand("lng", "Description of long-running command"));
 
         return base.OnAfterRenderAsync(firstRender);
     }
 
     public class CommandExample : BaseCommand
     {
-        public CommandExample(string name,string description):base(name,description)
+        public CommandExample(string name, string description) : base(name, description)
         {
-            base.AddOption("-t","Description of option -t");
-            base.AddOption("-ar","Description of option -ar");
+            base.AddOption("test", "Description of option test");
+            base.AddOption("file", "Description of option file");
         }
 
-        protected override bool Execute(DefaultStreamWriter console,string option1,string option2,string option3,string option4,List<string> arguments)
+        protected override bool Execute(ConsoleOut console, params KeyValuePair<string, string>[] options)
         {
             console.Write("This is output of a simple command");
+            foreach (var option in options)
+            {
+                console.Write(option.Value);
+            }
             return true;
         }
     }
 
     public class LongCommand(string name, string description) : BaseCommand(name, description, true)
     {
-        protected override async Task<bool> ExecuteAsync(DefaultStreamWriter console, string option1,string option2,string option3,string optionArgument4,List<string> arguments)
+        protected override async Task<bool> ExecuteAsync(ConsoleOut console, CancellationToken token = default, params KeyValuePair<string, string>[] options)
         {
             var i = 0;
 
-            while (i < 50)
+            while (i < 10)
             {
-                await Task.Delay(1550);
+                await Task.Delay(1550, token);
                 i++;
             }
-            
+
             console.Write("This was a long running command");
             return true;
         }

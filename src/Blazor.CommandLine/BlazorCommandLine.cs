@@ -44,8 +44,6 @@ public class BlazorCommandLineComponent : ComponentBase, IDisposable
             {
                 _cmd.AddCommand(baseCommand.Command);
             }
-
-            _cmd.Init();
         }
     }
 
@@ -67,7 +65,7 @@ public class BlazorCommandLineComponent : ComponentBase, IDisposable
         InvokeAsync(StateHasChanged);
     });
 
-    public string Version() => System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+    protected string Version() => System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
     protected async Task Execute(EditContext context)
     {

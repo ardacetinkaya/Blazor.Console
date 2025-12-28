@@ -26,16 +26,12 @@ Check Demo project(BlazorConsoleDemo.csproj) for usage;
 
 Add following extensions to services and application within Startup.cs
 
-```cs
-public void ConfigureServices(IServiceCollection services)
-{
-    services.AddCommandLine();
-}
+```csharp
 
-public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-{
-    app.UseCommandLine(env.WebRootPath);
-}
+builder.Services.AddCommandLine();
+
+app.UseCommandLine(app.Environment.WebRootPath);
+
 ```
 
 Add <BlazorCommandLine> tag into needed view file(ex: Index.razor)
@@ -83,51 +79,47 @@ To implement the command's main execution just override Execute() or ExecuteAsyn
 
 @code
 {
-    BlazorCommandLine console;
+    BlazorCommandLine _console;
 
     protected override Task OnAfterRenderAsync(bool firstRender)
     {
-        console.Commands.Add(new CommandExample("simple","Description of command"));
-        console.Commands.Add(new LongCommand("lng","Description of long-running command"));
+        _console.Commands.Add(new CommandExample("simple", "Description of command"));
+        _console.Commands.Add(new LongCommand("lng", "Description of long-running command"));
 
         return base.OnAfterRenderAsync(firstRender);
     }
 
     public class CommandExample : BaseCommand
     {
-        public CommandExample(string name,string description):base(name,description)
+        public CommandExample(string name, string description) : base(name, description)
         {
-            base.AddOption("-t","Description of option -t");
-            base.AddOption("-ar","Description of option -ar");
-
-            base.UseArguments($"Some extra arguments for {name}");
-        
+            base.AddOption("test", "Description of option test");
+            base.AddOption("file", "Description of option file");
         }
 
-        public override bool Execute(DefaultStreamWriter console,string option1,string option2,string option3,string option4,List<string> arguments)
+        protected override bool Execute(ConsoleOut console, params KeyValuePair<string, string>[] options)
         {
             console.Write("This is output of a simple command");
+            foreach (var option in options)
+            {
+                console.Write(option.Value);
+            }
             return true;
         }
     }
 
-    public class LongCommand : BaseCommand
+    public class LongCommand(string name, string description) : BaseCommand(name, description, true)
     {
-        public LongCommand(string name, string description):base(name,description,true)
-        {
-            
-        }
-
-        public override async Task<bool> ExecuteAsync(DefaultStreamWriter console, string option1,string option2,string option3,string optionArgument4,List<string> arguments)
+        protected override async Task<bool> ExecuteAsync(ConsoleOut console, CancellationToken token = default, params KeyValuePair<string, string>[] options)
         {
             var i = 0;
 
             while (i < 10)
             {
-                await Task.Delay(550);
+                await Task.Delay(1550, token);
                 i++;
             }
-            
+
             console.Write("This was a long running command");
             return true;
         }

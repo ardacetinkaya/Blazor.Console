@@ -1,24 +1,26 @@
 using System.CommandLine;
-using System.CommandLine.IO;
+using System.IO;
+
 
 namespace Blazor.Components.CommandLine.Console;
 
-public class ConsoleOut : IConsole
+public class ConsoleOut : InvocationConfiguration
 {
     public ConsoleOut()
     {
-        Out = new DefaultStreamWriter();
-        Error = new DefaultStreamWriter();
+        base.Error =  new StringWriter();
+        base.Output = new StringWriter();
     }
 
-    public IStandardStreamWriter Error { get; protected set; }
-
-    public IStandardStreamWriter Out { get; protected set; }
-
-    public bool IsOutputRedirected { get; protected set; }
-
-    public bool IsErrorRedirected { get; protected set; }
-
-    public bool IsInputRedirected { get; protected set; }
-
+    public void Write(string value, bool isError = false)
+    {
+        if (isError)
+        {
+            base.Error.WriteLine(value);
+        }
+        else
+        {
+            base.Output.WriteLine(value);
+        }
+    }
 }
