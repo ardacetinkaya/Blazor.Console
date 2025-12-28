@@ -29,7 +29,7 @@
             base.AddOption("-ar","Description of option -ar");
         }
 
-        public override bool Execute(DefaultStreamWriter console,string option1,string option2,string option3,string option4,List<string> arguments)
+        protected override bool Execute(DefaultStreamWriter console,string option1,string option2,string option3,string option4,List<string> arguments)
         {
             console.Write("This is output of a simple command");
             return true;
@@ -43,13 +43,13 @@
             
         }
 
-        public override async Task<bool> ExecuteAsync(DefaultStreamWriter console, string option1,string option2,string option3,string optionArgument4,List<string> arguments)
+        protected override async Task<bool> ExecuteAsync(DefaultStreamWriter console, string option1,string option2,string option3,string optionArgument4,List<string> arguments)
         {
             var i = 0;
 
-            while (i < 10)
+            while (i < 50)
             {
-                await Task.Delay(550);
+                await Task.Delay(1550);
                 i++;
             }
             

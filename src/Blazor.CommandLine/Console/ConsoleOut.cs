@@ -1,26 +1,24 @@
-namespace Blazor.Components.CommandLine.Console
+using System.CommandLine;
+using System.CommandLine.IO;
+
+namespace Blazor.Components.CommandLine.Console;
+
+public class ConsoleOut : IConsole
 {
-    using System.CommandLine;
-    using System.CommandLine.IO;
-
-    public class ConsoleOut : IConsole
+    public ConsoleOut()
     {
-        public ConsoleOut()
-        {
-            Out = new DefaultStreamWriter();
-            Error = new DefaultStreamWriter();
-        }
-
-        public IStandardStreamWriter Error { get; protected set; }
-
-        public IStandardStreamWriter Out { get; protected set; }
-
-        public bool IsOutputRedirected { get; protected set; }
-
-        public bool IsErrorRedirected { get; protected set; }
-
-        public bool IsInputRedirected { get; protected set; }
-
+        Out = new DefaultStreamWriter();
+        Error = new DefaultStreamWriter();
     }
+
+    public IStandardStreamWriter Error { get; protected set; }
+
+    public IStandardStreamWriter Out { get; protected set; }
+
+    public bool IsOutputRedirected { get; protected set; }
+
+    public bool IsErrorRedirected { get; protected set; }
+
+    public bool IsInputRedirected { get; protected set; }
 
 }
