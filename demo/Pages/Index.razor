@@ -1,8 +1,5 @@
 ﻿@page "/"
 @using System.Threading
-@using Blazor.CommandLine
-@using Blazor.Components.CommandLine
-@using Blazor.Components.CommandLine.Console
 
 @inject IRunningCommand RunningCommand
 
@@ -28,6 +25,8 @@
         {
             base.AddOption("test", "Description of option test");
             base.AddOption("file", "Description of option file");
+            base.AddOption("restart", "Description of option restart");
+
         }
 
         protected override bool Execute(ConsoleOut console, params KeyValuePair<string, string>[] options)

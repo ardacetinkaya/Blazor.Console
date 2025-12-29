@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using System.IO;
 using System.Reflection;
 
-namespace Blazor.Components;
+namespace Blazor.CommandLine;
 
 public static class ApplicationBuilderExtensions
 {

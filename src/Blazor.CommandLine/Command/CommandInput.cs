@@ -1,10 +1,9 @@
-using Blazor.Components.CommandLine.Console;
 using Microsoft.Extensions.Logging;
 using System;
 using System.CommandLine;
 using System.Threading.Tasks;
 
-namespace Blazor.Components.CommandLine;
+namespace Blazor.CommandLine.Command;
 
 public class Input
 {
@@ -23,7 +22,7 @@ internal class CommandInput(
     
     private readonly RootCommand _cmdBuilder = new(name);
 
-    public CommandInput AddCommand(Command command)
+    public CommandInput AddCommand(System.CommandLine.Command command)
     {
         _cmdBuilder?.Subcommands.Add(command);
 

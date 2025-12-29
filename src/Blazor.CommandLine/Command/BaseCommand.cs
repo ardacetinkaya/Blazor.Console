@@ -3,21 +3,20 @@ using System.CommandLine;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Blazor.Components.CommandLine.Console;
 
-namespace Blazor.Components.CommandLine;
+namespace Blazor.CommandLine.Command;
 
 public abstract class BaseCommand
 {
     private readonly IRunningCommand _loadingService;
-    internal Command Command { get; }
+    internal System.CommandLine.Command Command { get; }
 
     protected BaseCommand(string name, string description, bool longRunning = false)
     {
         if (string.IsNullOrWhiteSpace(name))
             throw new System.ArgumentException($"Command name can not have white space.", nameof(name));
 
-        Command = new Command(name, description);
+        Command = new System.CommandLine.Command(name, description);
 
         if (longRunning)
         {
@@ -55,9 +54,7 @@ public abstract class BaseCommand
 
     private IEnumerable<KeyValuePair<string, string>> GetOptionsValue(ParseResult context)
     {
-        var options = Command.Options.AsQueryable();
-
-        foreach (var option in options)
+        foreach (var option in Command.Options?.AsQueryable()!)
         {
             if (option is not Option<string> strOption) continue;
 
@@ -65,7 +62,8 @@ public abstract class BaseCommand
 
             if (!string.IsNullOrEmpty(optionValue))
             {
-                yield return new KeyValuePair<string, string>(option.Name.Trim('-'), context.GetValue<string>(strOption));
+                yield return new KeyValuePair<string, string>(option.Name.Trim('-'),
+                    context.GetValue<string>(strOption));
             }
         }
     }
@@ -74,7 +72,7 @@ public abstract class BaseCommand
     protected virtual async Task<bool> ExecuteAsync(ConsoleOut console, CancellationToken cancellationToken = default,
         params KeyValuePair<string, string>[] options)
     {
-        await Task.Delay(200);
+        await Task.Delay(200, cancellationToken);
         console.Write("ExecuteAsync() is not implemented.");
 
         return false;
@@ -89,29 +87,31 @@ public abstract class BaseCommand
     protected void AddOption(string name, string description)
     {
         if (string.IsNullOrEmpty(name)) throw new System.ArgumentNullException(nameof(name));
+        
+        // Normalize option name as --option
+        name = $"--{name.Trim('-')}";
+        
+        // Check for duplicate option names
+        if(Command.Options.Any(o => o.Name==name))
+        {
+            throw new System.ArgumentException($"Option with name '{name}' already exists in command '{Command.Name}'.");
+        }
+
+        var optionCount = Command.Options.Count;
+        optionCount = optionCount == 0 ? 1 : optionCount + 1;
+
+        // Create aliases for the option with a short form -o1, -o2, etc.
+        string[] aliases = [$"-o{optionCount.ToString()}"];
+
+        var option = new Option<string>(name, aliases)
+        {
+            Description = description,
+        };
+        
+        Command.Options.Add(option);
 
         
-        name = $"--{name.Trim('-')}";
-
-        var optionCount = Command.Options.Count();
-        if (optionCount < 4)
-        {
-            optionCount = optionCount == 0 ? 1 : optionCount + 1;
-            var optionName = $"-o{optionCount.ToString()}";
-            string[] aliases = [name, optionName];
-
-            var option = new Option<string>(name, aliases)
-            {
-                Description = description,
-            };
-            Command.Options.Add(option);
-
-            Handle();
-        }
-        else
-        {
-            return;
-        }
+        Handle();
     }
 
     public void UseArguments(string description)

@@ -1,12 +1,12 @@
-using Blazor.Components.CommandLine;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Blazor.CommandLine.Command;
 
-namespace Blazor.Components;
+namespace Blazor.CommandLine;
 
 public class BlazorCommandLineComponent : ComponentBase, IDisposable
 {

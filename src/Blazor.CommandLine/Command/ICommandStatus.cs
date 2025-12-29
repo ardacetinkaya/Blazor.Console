@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Blazor.Components.CommandLine;
+namespace Blazor.CommandLine.Command;
 
 public interface ICommandStatus : IDisposable
 {

@@ -2,7 +2,7 @@ using System.CommandLine;
 using System.IO;
 
 
-namespace Blazor.Components.CommandLine.Console;
+namespace Blazor.CommandLine;
 
 public class ConsoleOut : InvocationConfiguration
 {

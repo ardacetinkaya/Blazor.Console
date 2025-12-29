@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Blazor.Components.CommandLine.Console;
 
-namespace Blazor.Components.CommandLine;
+namespace Blazor.CommandLine.Command;
 
 public class VersionCommand() : BaseCommand("version", "Displays Blazor.Commandline version.")
 {
