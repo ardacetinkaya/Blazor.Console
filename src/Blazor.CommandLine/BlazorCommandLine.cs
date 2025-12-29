@@ -17,7 +17,6 @@ public class BlazorCommandLineComponent : ComponentBase, IDisposable
     protected string Placeholder { get; set; } = "Enter a command, type 'help' for available commands.";
     [Parameter] public string Name { get; set; }
     [Parameter] public string Description { get; set; }
-    [Parameter] public bool ShowDate { get; set; } = true;
     [Parameter] public List<BaseCommand> Commands { get; set; } = [];
     [Inject] internal IServiceProvider ServiceProvider { get; set; }
     [Inject] public IRunningCommand RunningCommand { get; set; }
@@ -53,7 +52,10 @@ public class BlazorCommandLineComponent : ComponentBase, IDisposable
         {
             if (!string.IsNullOrEmpty(task.Maintext))
             {
-                Running = $"<p class='prgs'><span class='main'>{task.Maintext}</span><span class='subtext'>{task.Subtext}</span></p>";
+                Running = $"<p class='prgs'>" +
+                          $"<span class='main'>{task.Maintext}</span>" +
+                          $"<span class='subtext'>{task.Subtext}</span>" +
+                          $"</p>";
             }
         }
         else
@@ -65,7 +67,6 @@ public class BlazorCommandLineComponent : ComponentBase, IDisposable
         InvokeAsync(StateHasChanged);
     });
 
-    protected string Version() => System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
     protected async Task Execute(EditContext context)
     {
@@ -83,10 +84,12 @@ public class BlazorCommandLineComponent : ComponentBase, IDisposable
             {
                 Disabled = "disabled";
                 Placeholder = "Please wait for command to be completed.";
-                Output += $"<p>";
+
+                Output += $"<p class='prgs'>";
                 Output += $"{_cmd.ToString()}";
                 Output += $"{await _cmd.Result()}";
                 Output += $"</p>";
+                
                 Disabled = null;
                 Placeholder = "Enter a command, type '--help' for available commands.";
             }

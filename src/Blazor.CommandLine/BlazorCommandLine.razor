@@ -4,34 +4,23 @@
 @inherits Blazor.CommandLine.BlazorCommandLineComponent
 
 <div id="console">
-    <div id="header">
-        <h4>@Name</h4>
-        @if(ShowDate){
-            <h5>> @System.DateTimeOffset.Now.ToString("dd MMMM yyyy HH:mm:ss \"GMT\"zzz", System.Globalization.CultureInfo.InvariantCulture)</h5>
-        }
-        @if(!string.IsNullOrEmpty(Description)){
-            if(Description=="##VERSION##")
-            {
-                <h6>> Blazor CommandLine [Version @Version()]</h6>
-            }else{
-                <h6>> @Description</h6>
-            }
-        }
-    </div>
     <div id="container">
         <pre>
             <code>@((MarkupString)Output)</code>
             <code>@((MarkupString)Running)</code>
         </pre>
-        <EditForm OnValidSubmit="Execute" autocomplete="off" Model="Command" novalidate>
-            <div id="input-line" class="input-line">
-                <div class="prompt">
-                    Command >
-                </div>
-                <div>
-                    <InputText id="commandline" autocomplete="off" Class="cmdline" disabled="@Disabled" placeholder="@Placeholder" @bind-Value="@Command.Text" />
+    </div>
+
+    <EditForm OnValidSubmit="Execute" autocomplete="off" Model="Command" novalidate>
+        <div id="input-line" class="input-line">
+            <div class="prompt">
+                <span class="prompt-label">Command &gt;</span>
+                <div class="input-wrapper">
+                    <InputText id="commandline" autocomplete="off" Class="cmdline" disabled="@Disabled"
+                               placeholder="@Placeholder" @bind-Value="@Command.Text"/>
                 </div>
             </div>
-        </EditForm>
-    </div>
+        </div>
+    </EditForm>
+
 </div>
