@@ -24,7 +24,7 @@
 
     #console #container pre {
         height: auto;
-        margin-bottom: -40px;
+        margin-bottom: 0;
         color: #757575;
     }
 
@@ -41,12 +41,12 @@
     }
 
     #console #container .prgs {
-        margin-top: -30px;
+        margin-top: 0;
     }
 
         #console #container .prgs .main {
             display: block !important;
-            margin-top: -40px;
+            margin-top: 0;
         }
 
         #console #container .prgs .subtext {
@@ -67,39 +67,28 @@
         }
 
 #console .input-line {
-    display: -webkit-box;
-    -webkit-box-orient: horizontal;
-    -webkit-box-align: stretch;
-    display: -moz-box;
-    -moz-box-orient: horizontal;
-    -moz-box-align: stretch;
-    display: box;
-    box-orient: horizontal;
-    box-align: stretch;
+    display: flex;
+    align-items: center;
+    width: 100%;
     clear: both;
 }
 
-    #console .input-line > div:nth-child(2) {
-        -webkit-box-flex: 1;
-        -moz-box-flex: 1;
-        box-flex: 1;
-    }
-
 #console .prompt {
-    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    width: 100%;
     color: #96b38a;
+}
+
+#console .prompt-label {
+    white-space: nowrap;
     margin-right: 7px;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    display: -moz-box;
-    -moz-box-pack: center;
-    -moz-box-orient: vertical;
-    display: box;
-    box-pack: center;
-    box-orient: vertical;
-    -webkit-user-select: none;
-    -moz-user-select: none;
     user-select: none;
+}
+
+#console .input-wrapper {
+    flex-grow: 1;
+    display: flex;
 }
 
 #console .cmdline {
@@ -110,7 +99,7 @@
     font: inherit;
     padding: 0;
     border: 0 !important;
-    color: inherit;
+    color: white;
 }
 
 .valid {

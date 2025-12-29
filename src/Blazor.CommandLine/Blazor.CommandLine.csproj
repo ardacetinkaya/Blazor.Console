@@ -17,13 +17,14 @@
     - Monitor application resources
    
    Updates:
-    - .NET 10.0 upgrade
-    - Some refactoring and improvements
+    - System.CommandLine upgraded to 2.0.1
+    - Some improvements and bug fixes
     
     </Description>
-    <Version>10.0.0</Version>
+    <Version>10.1.0</Version>
     <Authors>Arda Cetinkaya</Authors>
     <PackageTags>commandline;blazor;asp.net core;.net core</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/ardacetinkaya/Blazor.Console</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
@@ -33,6 +34,6 @@
     <EmbeddedResource Include="content\**" Exclude="**\*.js;**\*.css" LogicalName="blazor:file:%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
+    <PackageReference Include="System.CommandLine" Version="2.0.1" />
   </ItemGroup>
 </Project>

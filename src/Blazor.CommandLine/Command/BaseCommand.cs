@@ -1,24 +1,22 @@
 using System.Threading.Tasks;
 using System.CommandLine;
-using System.CommandLine.Invocation;
 using System.Collections.Generic;
 using System.Linq;
-using Blazor.Components.CommandLine.Console;
-using System.CommandLine.IO;
+using System.Threading;
 
-namespace Blazor.Components.CommandLine;
+namespace Blazor.CommandLine.Command;
 
 public abstract class BaseCommand
 {
-    readonly Command _command;
-    readonly IRunningCommand _loadingService;
-    internal Command Command => _command;
-    
-    public BaseCommand(string name, string description, bool longRunning = false)
-    {
-        if (string.IsNullOrWhiteSpace(name)) throw new System.ArgumentException($"Command name can not have white space.", nameof(name));
+    private readonly IRunningCommand _loadingService;
+    internal System.CommandLine.Command Command { get; }
 
-        _command = new Command(name, description);
+    protected BaseCommand(string name, string description, bool longRunning = false)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new System.ArgumentException($"Command name can not have white space.", nameof(name));
+
+        Command = new System.CommandLine.Command(name, description);
 
         if (longRunning)
         {
@@ -26,57 +24,61 @@ public abstract class BaseCommand
         }
 
         Handle();
-
     }
 
     private void Handle()
     {
-        _command.SetHandler(async (InvocationContext context) =>
+        if (_loadingService != null)
         {
-            var args = _command.Arguments.FirstOrDefault(a => a.Name == "args") is Argument<List<string>> argsArgument ? context.ParseResult.GetValueForArgument(argsArgument) : [];
-
-            var console = context.Console;
-
-            var o1 = GetOptionValue(context, "-o1");
-            var o2 = GetOptionValue(context, "-o2");
-            var o3 = GetOptionValue(context, "-o3");
-            var o4 = GetOptionValue(context, "-o4");
-
-            if (_loadingService != null)
+            Command.SetAction((parseResult, cancellationToken) =>
             {
-                await _loadingService.StartCommandAsync(async (task) =>
-                {
-                    await ExecuteAsync(console.Out as DefaultStreamWriter, o1, o2, o3, o4, args);
-                }, "Execution is started...");
-            }
-            else
-            {
-                Execute(console.Out as DefaultStreamWriter, o1, o2, o3, o4, args);
-
-            }
-        });
-    }
-
-    private string GetOptionValue(InvocationContext context, string alias)
-    {
-        var option = _command.Options.FirstOrDefault(o => o.HasAlias(alias));
-        if (option is Option<string> strOption)
-        {
-            return context.ParseResult.GetValueForOption(strOption);
+                var options = GetOptionsValue(parseResult);
+                var console = parseResult.InvocationConfiguration as ConsoleOut;
+                return _loadingService.StartCommandAsync(
+                    async (task) => { await ExecuteAsync(console, cancellationToken, options.ToArray()); },
+                    "Execution is started...");
+            });
         }
-        return null;
+        else
+        {
+            Command.SetAction(parseResult =>
+            {
+                var options = GetOptionsValue(parseResult);
+                var console = parseResult.InvocationConfiguration as ConsoleOut;
+
+
+                Execute(console, options.ToArray());
+            });
+        }
+    }
+
+    private IEnumerable<KeyValuePair<string, string>> GetOptionsValue(ParseResult context)
+    {
+        foreach (var option in Command.Options?.AsQueryable()!)
+        {
+            if (option is not Option<string> strOption) continue;
+
+            var optionValue = context.GetValue<string>(strOption);
+
+            if (!string.IsNullOrEmpty(optionValue))
+            {
+                yield return new KeyValuePair<string, string>(option.Name.Trim('-'),
+                    context.GetValue<string>(strOption));
+            }
+        }
     }
 
 
-    protected virtual async Task<bool> ExecuteAsync(DefaultStreamWriter console, string option1, string option2, string option3, string option4, List<string> arguments)
+    protected virtual async Task<bool> ExecuteAsync(ConsoleOut console, CancellationToken cancellationToken = default,
+        params KeyValuePair<string, string>[] options)
     {
-        await Task.Delay(200);
+        await Task.Delay(200, cancellationToken);
         console.Write("ExecuteAsync() is not implemented.");
 
         return false;
     }
 
-    protected virtual bool Execute(DefaultStreamWriter console, string option1, string option2, string option3, string option4, List<string> arguments)
+    protected virtual bool Execute(ConsoleOut console, params KeyValuePair<string, string>[] options)
     {
         console.Write("Execute() is not implemented.");
         return false;
@@ -85,34 +87,38 @@ public abstract class BaseCommand
     protected void AddOption(string name, string description)
     {
         if (string.IsNullOrEmpty(name)) throw new System.ArgumentNullException(nameof(name));
-
-        var optionCount = _command.Options.Count();
-        if (optionCount < 4)
+        
+        // Normalize option name as --option
+        name = $"--{name.Trim('-')}";
+        
+        // Check for duplicate option names
+        if(Command.Options.Any(o => o.Name==name))
         {
-            optionCount = optionCount == 0 ? 1 : optionCount + 1;
-            var optionName = $"-o{optionCount.ToString()}";
-            string[] aliases = [name, optionName];
-
-            var option = new Option<string>(name, description)
-            {
-                Description = description
-            };
-            _command.AddOption(option);
-
-            Handle();
-        }
-        else
-        {
-            return;
+            throw new System.ArgumentException($"Option with name '{name}' already exists in command '{Command.Name}'.");
         }
 
+        var optionCount = Command.Options.Count;
+        optionCount = optionCount == 0 ? 1 : optionCount + 1;
+
+        // Create aliases for the option with a short form -o1, -o2, etc.
+        string[] aliases = [$"-o{optionCount.ToString()}"];
+
+        var option = new Option<string>(name, aliases)
+        {
+            Description = description,
+        };
+        
+        Command.Options.Add(option);
+
+        
+        Handle();
     }
 
     public void UseArguments(string description)
     {
         if (string.IsNullOrEmpty(description)) throw new System.ArgumentNullException(nameof(description));
 
-        _command.Add(new Argument<List<string>>("args")
+        Command.Add(new Argument<List<string>>("args")
         {
             Description = description,
             Arity = ArgumentArity.ZeroOrMore
@@ -120,6 +126,4 @@ public abstract class BaseCommand
 
         Handle();
     }
-
-
 }

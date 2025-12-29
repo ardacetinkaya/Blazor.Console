@@ -1,16 +1,16 @@
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
-using Blazor.Components.CommandLine.Console;
 
-namespace Blazor.Components.CommandLine;
+namespace Blazor.CommandLine.Command;
 
 public class VersionCommand() : BaseCommand("version", "Displays Blazor.Commandline version.")
 {
-    protected override bool Execute(DefaultStreamWriter console,string optionArgument1, string optionArgument2, string optionArgument3, string optionArgument4, List<string> arguments)
+    protected override bool Execute(ConsoleOut console,params KeyValuePair<string, string>[] options)
     {
         try
         {
-            console.Write(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            console.Write(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version!.ToString());
             return true;
         }
         catch (System.Exception)
@@ -22,12 +22,12 @@ public class VersionCommand() : BaseCommand("version", "Displays Blazor.Commandl
 
 public class OsCommand() : BaseCommand("os", "Displays the current operating system.")
 {
-    protected override Task<bool> ExecuteAsync(DefaultStreamWriter console, string option1, string option2, string option3, string option4, List<string> arguments)
+    protected override Task<bool> ExecuteAsync(ConsoleOut console, CancellationToken token = default, params KeyValuePair<string, string>[] options)
     {
-        return base.ExecuteAsync(console, option1, option2, option3, option4, arguments);
+        return base.ExecuteAsync(console, token, options);
     }
 
-    protected override bool Execute(DefaultStreamWriter console, string optionArgument1, string optionArgument2, string optionArgument3, string optionArgument4, List<string> arguments)
+    protected override bool Execute(ConsoleOut console, params KeyValuePair<string, string>[] options)
     {
         try
         {

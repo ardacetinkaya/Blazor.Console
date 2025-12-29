@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Blazor.Components.CommandLine;
+namespace Blazor.CommandLine.Command;
 
 public interface IRunningCommand
 {
