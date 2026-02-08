@@ -27,11 +27,12 @@ public class ConsoleOut : InvocationConfiguration
         }
         else
         {
-            if (OnOutput != null)
+            var handler = OnOutput;
+            if (handler != null)
             {
                 // When streaming, push via the callback only — don't also write to
                 // the StringWriter, so the caller won't see the same text twice.
-                OnOutput.Invoke(value);
+                handler.Invoke(value);
             }
             else
             {
