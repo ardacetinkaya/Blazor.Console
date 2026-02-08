@@ -1,3 +1,4 @@
+using System;
 using System.CommandLine;
 using System.IO;
 
@@ -6,6 +7,12 @@ namespace Blazor.CommandLine;
 
 public class ConsoleOut : InvocationConfiguration
 {
+    /// <summary>
+    /// Event that fires each time a line is written to the output.
+    /// Subscribers receive the raw text (without trailing newline).
+    /// </summary>
+    public event Action<string> OnOutput;
+
     public ConsoleOut()
     {
         base.Error =  new StringWriter();
@@ -20,7 +27,16 @@ public class ConsoleOut : InvocationConfiguration
         }
         else
         {
-            base.Output.WriteLine(value);
+            if (OnOutput != null)
+            {
+                // When streaming, push via the callback only — don't also write to
+                // the StringWriter, so the caller won't see the same text twice.
+                OnOutput.Invoke(value);
+            }
+            else
+            {
+                base.Output.WriteLine(value);
+            }
         }
     }
 }

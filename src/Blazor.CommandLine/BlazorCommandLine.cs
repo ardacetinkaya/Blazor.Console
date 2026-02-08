@@ -87,7 +87,18 @@ public class BlazorCommandLineComponent : ComponentBase, IDisposable
 
                 Output += $"<p class='prgs'>";
                 Output += $"{_cmd.ToString()}";
-                Output += $"{await _cmd.Result()}";
+
+                var result = await _cmd.Result(chunk =>
+                {
+                    Output += $"{chunk}\n";
+                    InvokeAsync(StateHasChanged);
+                });
+
+                if (!string.IsNullOrEmpty(result))
+                {
+                    Output += result;
+                }
+
                 Output += $"</p>";
                 
                 Disabled = null;
