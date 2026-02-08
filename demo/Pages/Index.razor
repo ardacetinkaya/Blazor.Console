@@ -13,9 +13,12 @@
 
     protected override Task OnAfterRenderAsync(bool firstRender)
     {
-        _console.Commands.Add(new CommandExample("simple", "Description of command"));
-        _console.Commands.Add(new LongCommand("lng", "Description of long-running command"));
-        _console.Commands.Add(new StreamingCommand("stream", "A streaming command that outputs data in real-time"));
+        if (firstRender)
+        {
+            _console.Commands.Add(new CommandExample("simple", "Description of command"));
+            _console.Commands.Add(new LongCommand("lng", "Description of long-running command"));
+            _console.Commands.Add(new StreamingCommand("stream", "A streaming command that outputs data in real-time"));
+        }
 
         return base.OnAfterRenderAsync(firstRender);
     }
