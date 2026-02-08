@@ -29,7 +29,7 @@ It's great for some simple operations:
 - **Custom Commands:** Create your own commands by inheriting from a base class.
 - **Arguments & Options:** Supports standard CLI arguments and options (e.g., `--force`, `-v`).
 - **Async Support:** Handles long-running tasks with loading indicators.
-- **Streaming Support:** Stream results to UI for long running commands.
+- **Streaming Support:** Stream results to UI for long-running commands.
 - **Built on System.CommandLine:** Uses the standard .NET command line parser.
 
 ## Installation
