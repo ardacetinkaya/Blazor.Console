@@ -90,8 +90,11 @@ public class BlazorCommandLineComponent : ComponentBase, IDisposable
 
                 var result = await _cmd.Result(chunk =>
                 {
-                    Output += $"{chunk}\n";
-                    InvokeAsync(StateHasChanged);
+                    _ = InvokeAsync(() =>
+                    {
+                        Output += $"{chunk}\n";
+                        StateHasChanged();
+                    });
                 });
 
                 if (!string.IsNullOrEmpty(result))
