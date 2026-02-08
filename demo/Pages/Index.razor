@@ -13,8 +13,12 @@
 
     protected override Task OnAfterRenderAsync(bool firstRender)
     {
-        _console.Commands.Add(new CommandExample("simple", "Description of command"));
-        _console.Commands.Add(new LongCommand("lng", "Description of long-running command"));
+        if (firstRender)
+        {
+            _console.Commands.Add(new CommandExample("simple", "Description of command"));
+            _console.Commands.Add(new LongCommand("lng", "Description of long-running command"));
+            _console.Commands.Add(new StreamingCommand("stream", "A streaming command that outputs data in real-time"));
+        }
 
         return base.OnAfterRenderAsync(firstRender);
     }
@@ -53,6 +57,31 @@
             }
 
             console.Write("This was a long running command");
+            return true;
+        }
+    }
+
+    /// <summary>
+    /// A streaming command that writes output incrementally.
+    /// Each console.Write() call is immediately visible in the UI while the command runs.
+    /// </summary>
+    public class StreamingCommand(string name, string description) : BaseCommand(name, description, longRunning: true)
+    {
+        protected override async Task<bool> ExecuteAsync(ConsoleOut console, CancellationToken token = default, params KeyValuePair<string, string>[] options)
+        {
+            console.Write("Starting data stream...");
+            await Task.Delay(1000, token);
+
+            var items = new[] { "Users", "Orders", "Products", "Inventory", "Reports" };
+
+            for (int i = 0; i < items.Length; i++)
+            {
+                await Task.Delay(1200, token);
+                console.Write($"  [{i + 1}/{items.Length}] Processing {items[i]}... OK");
+            }
+
+            await Task.Delay(800, token);
+            console.Write("Stream complete. All data processed successfully.");
             return true;
         }
     }

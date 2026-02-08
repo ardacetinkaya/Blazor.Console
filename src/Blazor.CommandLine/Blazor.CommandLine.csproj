@@ -7,23 +7,26 @@
     <BlazorLinkOnBuild>false</BlazorLinkOnBuild>
     <PackageId>Blzr.Components.CommandLine</PackageId>
     <Description>
-    A simple component to mock command line interface(CLI) for ASP.NET Core Blazor applications to execute some custom commands for an application. 
-    Within ICommand interface it is possible to implement any custom business related commands for Blazor.Console
-    
-   Example scenarios;
+    A Blazor component that provides a command line interface (CLI) for ASP.NET Core Blazor applications.
+    Define and execute custom commands with options, arguments, and help text — all from a browser-based console UI.
+
+    Features:
+    - Create sync and async custom commands
+    - Streaming output support — command output is displayed in real-time as it is produced
+    - Built-in help system — usage info, command descriptions, and options are shown automatically
+    - Long-running command support with progress tracking
+    - Built on System.CommandLine 2.0.1
+
+    Example scenarios:
     - Clear response cache
     - Export log files
     - Change run-time settings
     - Monitor application resources
-   
-   Updates:
-    - System.CommandLine upgraded to 2.0.1
-    - Some improvements and bug fixes
-    
+    - Stream real-time data to the console
     </Description>
-    <Version>10.1.0</Version>
+    <Version>10.2.0</Version>
     <Authors>Arda Cetinkaya</Authors>
-    <PackageTags>commandline;blazor;asp.net core;.net core</PackageTags>
+    <PackageTags>commandline;blazor;asp.net core;.net core;console;cli;streaming</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/ardacetinkaya/Blazor.Console</RepositoryUrl>
   </PropertyGroup>
