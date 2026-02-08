@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using Blazor.CommandLine.Command;
 
@@ -53,8 +54,8 @@ public class BlazorCommandLineComponent : ComponentBase, IDisposable
             if (!string.IsNullOrEmpty(task.Maintext))
             {
                 Running = $"<p class='prgs'>" +
-                          $"<span class='main'>{task.Maintext}</span>" +
-                          $"<span class='subtext'>{task.Subtext}</span>" +
+                          $"<span class='main'>{WebUtility.HtmlEncode(task.Maintext)}</span>" +
+                          $"<span class='subtext'>{WebUtility.HtmlEncode(task.Subtext)}</span>" +
                           $"</p>";
             }
         }
@@ -86,17 +87,17 @@ public class BlazorCommandLineComponent : ComponentBase, IDisposable
                 Placeholder = "Please wait for command to be completed.";
 
                 Output += $"<p class='prgs'>";
-                Output += $"{_cmd.ToString()}";
+                Output += $"{WebUtility.HtmlEncode(_cmd.ToString())}";
 
                 var result = await _cmd.Result(chunk =>
                 {
-                    Output += $"{chunk}\n";
+                    Output += $"{WebUtility.HtmlEncode(chunk)}\n";
                     InvokeAsync(StateHasChanged);
                 });
 
                 if (!string.IsNullOrEmpty(result))
                 {
-                    Output += result;
+                    Output += WebUtility.HtmlEncode(result);
                 }
 
                 Output += $"</p>";
