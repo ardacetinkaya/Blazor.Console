@@ -1,3 +1,5 @@
+
+
 # Blazor.CommandLine (Blazor.Console)
 
 [![Actions Status](https://github.com/ardacetinkaya/Blazor.Console/workflows/Build/badge.svg)](https://github.com/ardacetinkaya/Blazor.Console/actions)
@@ -71,8 +73,7 @@ Add the component to any Razor page (e.g., `Index.razor`):
 ```razor
 @page "/"
 @using Blazor.CommandLine
-@using Blazor.Components.CommandLine
-@using Blazor.Components.CommandLine.Console
+@using Blazor.CommandLine.Command
 
 <BlazorCommandLine @ref="_console" Name="My App CLI" />
 
@@ -96,8 +97,8 @@ Add the component to any Razor page (e.g., `Index.razor`):
 To create a command, inherit from `BaseCommand` and override the `Execute` or `ExecuteAsync` method.
 
 ```csharp
+using Blazor.CommandLine;
 using Blazor.CommandLine.Command;
-using Blazor.Components.CommandLine.Console;
 
 public class MyCustomCommand : BaseCommand
 {
@@ -164,4 +165,3 @@ Feel free to open an issue to discuss ideas or submit a pull request. Let's make
 ## License
 
 This project is licensed under the MIT License.
-
